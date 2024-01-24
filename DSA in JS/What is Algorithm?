@@ -1,0 +1,42 @@
+An algorithm is a set of well-defined instruction to solve a particular problem.
+
+- Real world example
+Ingredients --> Recipe --> Tasty Dish
+
+Cup of Noodle, Taste maker, water --> 1. boil water, 2. pour water into cup, 3. add taste maker, 4. Close lid and wait for 4 min --> output - Tasty Noodles
+
+## Programming
+
+Input --> Algo --> Output.
+
+## Characteristics of Algo
+1. well defined inputs and output.
+2. each step should be clear
+3. language independent.
+
+## Algorithm Analysis
+There are multiple ways to solve one problem.
+Ex. There are multiple algo to sort a list of numbers.
+
+How do we analyse which one of them is the most efficient algo?
+Mostly we measure in Absolutely manners
+
+## Algorithm Analysis Contd.
+The absolute running of an algo cannot be predicted, since it depends on a number os factors:
+- Programming language used to implement the algo.
+- The computer the program runs on
+- Other program running at the same time.
+- Quality of the operating system.
+
+We evaluate the performance of an algo in terms of its input size.
+# Time Complexity: Amount of time taken by an algo to run, as a function of input size.
+
+# Space Complexity: Amount of memory taken by an algo to run, as a function of input size.
+
+## How to represent Complexity?
+
+Asymptotic Notations
+-Mathematical tools to represnt time and space complexity
+1. Big-O notation - worst case
+2. Omega Notation - best case
+3. theta notation - average case

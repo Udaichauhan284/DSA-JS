@@ -1,0 +1,7 @@
+Big-O Notation
+The worst case complexity of an algo is represented using the Big-O notation.
+
+BigO notation describes the complexity of an algo using algebraic terms
+It has two important characteristics
+- It is expressed in terms of the input.
+- It focus on the bigger picture wihout getting caught up in the minute details.
