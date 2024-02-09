@@ -1,0 +1,11 @@
+/* Recursion 
+What? - Recursion is a probelm solving technique where the solution depends on solutions to smaller instance of the same problem.
+Recursion is when a function calls itself.
+
+Why?
+A great technique to simplify your solution.
+If you find yourself breaking down your problem into smaller versions of the same problem, recursion is very useful.
+
+Every recursive soltion needs to have a base case - a condition to terminate the recursion.
+Recursion might simplify slving a problem but it does not always translate to a faster solution. A recursive solution may be far worse compared to an iterative solution.
+*/
