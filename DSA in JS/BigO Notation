@@ -5,3 +5,26 @@ BigO notation describes the complexity of an algo using algebraic terms
 It has two important characteristics
 - It is expressed in terms of the input.
 - It focus on the bigger picture wihout getting caught up in the minute details.
+
+- Objects - Big O
+An object is a collection of key value pairs
+Insert , Remove, Access, Search -- O(1)
+Object.keys() - O(n)
+Object.values() - O(n)
+Object.entities() - O(n)
+
+Array - Big O
+An array is an ordered collection of values
+Insert/remove at end - O(1)
+Insert/ remove at beginning - O(n)
+Access - O(1)
+Search - O(n)
+Push / Pop - O(1)
+Shift/unshift/concat/slice/splice - O(n)
+forEach / map / filter / reduce - O(n)
+
+## Big-O Guide
+Calculation not dependent on input size - O(1)
+1 loop - O(n)
+2 nested loop - O(n^2)
+input size reduce by half - O(logN)
