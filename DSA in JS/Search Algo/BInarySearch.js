@@ -13,18 +13,18 @@ function BinarySearch(arr, target) {
   let leftIndex = 0;
   let rightIndex = arr.length - 1;
 
-  while(leftIndex <= rightIndex){
+  while (leftIndex <= rightIndex) {
     let mid = leftIndex + Math.floor((rightIndex - leftIndex) / 2);
-    if(target === arr[mid]){
+    if (target === arr[mid]) {
       return mid;
     }
-    if(target < arr[mid]){
+    if (target < arr[mid]) {
       rightIndex = mid - 1;
-    }else {
+    } else {
       leftIndex = mid + 1;
     }
   }
   return -1;
 }
-let Arr = [2,4,6,7,8,9,11];
-console.log(BinarySearch(Arr,4));
+let Arr = [2, 4, 6, 7, 8, 9, 11];
+console.log(BinarySearch(Arr, 4));
