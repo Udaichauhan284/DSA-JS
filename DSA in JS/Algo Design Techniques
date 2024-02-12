@@ -1,0 +1,14 @@
+1. Brute Force
+Simple and exhaustuve technique that evalutes every possible outcome to find the best solution. Ex/ Linear Search
+
+2. Greedy
+Choose the best option at the current time, without any consideration for the fture. Ex. Dijkstra Algo, Prim;s Algo and Kruskal's algo.
+
+3. Divde and Conquer 
+Divde the problem into smaller sub-problems. each sub-problem is then solved and the partial solutions are recombines to determine the overall solution. Ex: Binary Search, Quick Sort, Merge Sort and Tower of Hanoi.
+
+4. Dynamic Programming
+Divide the problem into the smaller sub-problems. Break it down into smaller but overlapping sub-problems. Store the result and reuse it for the same sub-problems. This is called memoization and is a optimization technoque that improves the time complexity of your algo. Ex. Fibonnaci numbers and climbing staricase.
+
+5. Backtracking
+Generate all possible solutions. Check if the solution satisfies all the given constrains and only then you proceed with generating subsequent solutions. If the constraints are not satisfies, backtrack and go on a different path to find the solution. Ex: N-queens problem
