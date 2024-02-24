@@ -47,7 +47,7 @@ function optimalSingleElement(nums){
       return mid;
     }
 
-    // we are in left part
+    // we are in left part (even, odd) or (odd,even)
   if((mid % 2 === 1 && nums[mid] === nums[mid-1]) || (mid % 2 === 0 && nums[mid] === nums[mid-1])){
     low = mid + 1; //eliminates the left half
   }else {
