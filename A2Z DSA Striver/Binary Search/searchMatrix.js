@@ -1,3 +1,4 @@
+//74. Search a 2d array
 //brute - O(N X M)
 function searchMatrix(matrix, target) {
   const n = matrix.length;
