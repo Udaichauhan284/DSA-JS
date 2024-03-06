@@ -11,5 +11,21 @@ function reverseWordInString(s){
   }
   return reverseStr;
 }
-let str = "the blue is sky";
+
+// more optimize
+const optimize = (s) => {
+  let str = s.split(" ");
+  let output = "";
+  for(let i=str.length-1; i>=0; i--){
+    if(str[i]){
+      if(output.length > 0){
+        output += " ";
+      }
+      output += str[i];
+    }
+  }
+  return output;
+}
+let str = "the sky is blue";
 console.log(reverseWordInString(str));
+console.log(optimize(str));
