@@ -37,7 +37,7 @@ function solve(board,row,result){
 
 function isValid(board, row, col){
   //look for up, kee uper koi Q toh nhi
-  for(let i=row; i>=row; i--){
+  for(let i=row; i>=0; i--){
     if(board[i][col] === 'Q'){
       return false;
     }
