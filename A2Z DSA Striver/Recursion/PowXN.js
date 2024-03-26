@@ -46,7 +46,7 @@ const myPow2 = (x,n) => {
   }
   let halfPower = 1;
   if(n%2===0){
-    halfPower = myPow2(x, Math.floor(n/3));
+    halfPower = myPow2(x, Math.floor(n/2));
     return halfPower * halfPower;
   }
   else {
