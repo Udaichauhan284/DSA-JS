@@ -4,20 +4,20 @@ class MinHeap {
   }
 
   getParentIndex(idx) {
-    return Math.floor((idx - i) / 2);
+    return Math.floor((idx - 1) / 2);
   }
   getLeftChildIndex(idx) {
-    return 2 * i + 1;
+    return 2 * idx + 1;
   }
   getRightChildIndex(idx) {
-    return 2 * i + 2;
+    return 2 * idx + 2;
   }
   swap(i1, i2) {
     let temp = this.data[i1];
     this.data[i1] = this.data[i2];
     this.data[i2] = temp;
   }
-  push(ley) {
+  push(key) {
     this.data[this.data.length] = key;
     this.heapifyUp();
   }
