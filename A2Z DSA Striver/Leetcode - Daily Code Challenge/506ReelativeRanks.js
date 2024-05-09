@@ -39,7 +39,7 @@ const findRelativeRanks = (score) => {
 };
 
 //Method-2 just find out the max of score and form a arr with that maxscore, in that score will be index, same as previous app, there i was taking map, here just need to take a ar and ran. TC: O(n), SC: O(max_scroe).
-const findRelativeRanks = (score) => {
+const findRelativeRanks1 = (score) => {
   let len = score.length;
   let result = new Array(len);
   let maxi = score[0];
