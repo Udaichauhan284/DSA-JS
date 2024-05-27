@@ -7,7 +7,7 @@ Note:
 For a sorted array 'arr', 'lower_bound' of a number 'x' is defined as the smallest index 'idx' such that the value 'arr[idx]' is not less than 'x'.
 arr[ind] >= x, use Binary Search
 */
-//TV O(logN)
+//TC O(logN)
 function LowerBound(arr, target){
   let len = arr.length;
   let low = 0, high = len - 1;
