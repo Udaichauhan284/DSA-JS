@@ -78,7 +78,7 @@ class Solution {
     let sum = 0;
 
     while (!pq.isEmpty()) {
-      let [wt, node] = pq.pop();
+      let [wt, node] = pq.poll();
 
       if (inMST[node]) continue;
 
