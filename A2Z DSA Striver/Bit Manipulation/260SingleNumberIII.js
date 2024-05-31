@@ -50,3 +50,35 @@ const singleNumber = (nums) => {
   }
   return [b1,b2];
 }
+
+//31 May 2024 - do this method, good and easy to underatand.
+/* Leetcode Daily Code Challenge - Topic: Bit Manipulation, Array
+*/
+/* Method 2- use of BIt manipultion
+we do xor for all, and remmeber it will long variable.
+and need to find the rightMost bit of all elem to 
+sepearate into two different bucket, for that we need
+mask for mask do (xorr & xorr-1)^xorr.
+TC: O(2n) ~O(n), SC: O(1)
+*/
+const singleNumber1 = (nums) => {
+  let len = nums.length;
+  let xorr = 0
+  for(let i=0; i<len; i++){
+      xorr = xorr ^ nums[i];
+  }
+  //mask (rightMostSetbit)
+  let mask = (xorr & (xorr-1))^xorr;
+
+  //now traverse into elem use mask to sepatre the
+  //elem by its 1 rightMostSetBit
+  let b1 = 0, b2=0;
+  for(let num of nums){
+      if(num & mask){ //set bit bucket
+          b1 = b1^num;
+      }else{ //0 bit bucket
+          b2 = b2^num;
+      }
+  }
+  return [b1,b2];
+}
