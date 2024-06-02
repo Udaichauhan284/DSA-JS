@@ -1,49 +1,14 @@
-/* Dijkstra's Algo
-this algo is used in weight graph, to find the shortest path
-Method-1 by Priority Queue (Min-Heap);
+/* 1976. Number of Ways to Arrive at Destination
+Input: n = 7, roads = [[0,6,7],[0,1,2],[1,2,3],[1,3,3],[6,3,3],[3,5,1],[6,5,1],[2,5,1],[0,4,5],[4,6,2]]
+Output: 4
+Explanation: The shortest amount of time it takes to go from intersection 0 to intersection 6 is 7 minutes.
+The four ways to get there in 7 minutes are:
+- 0 ➝ 6
+- 0 ➝ 4 ➝ 6
+- 0 ➝ 1 ➝ 2 ➝ 5 ➝ 6
+- 0 ➝ 1 ➝ 3 ➝ 5 ➝ 6
 */
-//Priority Queue - (Min-Heap), measn ascending order, and smallest one on top
-class PriorityQueue{
-  constructor(){
-    this.queue = [];
-  }
-  enqueue(element){
-    this.queue.push(element);
-    //now sort the queue
-    this.queue.sort((a,b) => a[0]-b[0]);
-  }
-  dequeue(){
-    if(this.queue.length === 0) return null;
-    if(this.queue.length === 1) return this.queue.pop();
-    return this.queue.shift(); //need to take out first one, min one
-  }
-  isEmpty(){
-    return this.queue.length === 0;
-  }
-}
-class Solution {
-  dijkstra(V,adj,source){
-    //first take priority queue
-    let pq = new PriorityQueue();
-    let result = Array(V).fill(Number.MAX_SAFE_INTEGER);
-    //first push 0 for soruce
-    result[source] = 0;
-    pq.enqueue([0,source]); //weight, node
-    while(!pq.isEmpty()){
-      let [d,node] = pq.dequeue();
-      for(let [adjNode, wt] of adj[node]){
-        let currWeight = d+wt;
-        if(currWeight < result[adjNode]){
-          result[adjNode] = currWeight;
-          pq.enqueue([currWeight, adjNode]);
-        }
-      }
-    }
-    return result;
-  }
-}
-
-//Good Verison of MinHeap with pair push
+//Prioritty Queue - Min Heap
 class MinHeap {
   constructor() {
     this.data = [];
@@ -112,6 +77,44 @@ class MinHeap {
     }
   }
   isEmpty() {
-    this.data.length === 0;
+    return this.data.length === 0;
   }
 }
+/* Use of Dijkstra Algo, just tale a ways array for storing 
+the number of wasy, we reach at that node, change with previous node.
+TC:O(ElogV), SC: O(n)
+*/
+var countPaths = function (n, roads) {
+  let adj = Array(n)
+    .fill(0)
+    .map(() => []);
+  //fill the adj
+  for (let [u, v, time] of roads) {
+    //this is undirected graph
+    adj[u].push([v, time]);
+    adj[v].push([u, time]);
+  }
+  let dist = Array(n).fill(Number.MAX_VALUE);
+  let ways = Array(n).fill(0);
+  let pq = new MinHeap();
+  pq.push([0, 0]); //dist, node
+  dist[0] = 0;
+  ways[0] = 1;
+  let mod = 1000000007;
+  while (!pq.isEmpty()) {
+    let [d, node] = pq.poll();
+    for (let [v, time] of adj[node]) {
+      if (d + time < dist[v]) {
+        dist[v] = d + time;
+        pq.push([d + time, v]);
+        ways[v] = ways[node];
+      }
+      // If we again encounter a node with the same short distance
+      // as before, we simply increment the no. of ways.
+      else if (d + time === dist[v]) {
+        ways[v] = (ways[v] + ways[node]) % mod;
+      }
+    }
+  }
+  return ways[n - 1] % mod;
+};
