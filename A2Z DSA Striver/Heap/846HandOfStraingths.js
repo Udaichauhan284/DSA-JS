@@ -140,3 +140,120 @@ var isNStraightHan1 = function(hand, groupSize) {
   }
   return true;
 };
+
+/* *************************************************
+****************************************************
+****************************************************
+*/
+//This is a Good approach, follow this one
+class MinHeap {
+  constructor() {
+      this.data = [];
+  }
+
+  getParentIndex(idx) {
+      return Math.floor((idx - 1) / 2);
+  }
+
+  getLeftChildIndex(idx) {
+      return idx * 2 + 1;
+  }
+
+  getRightChildIndex(idx) {
+      return idx * 2 + 2;
+  }
+
+  swap(i1, i2) {
+      let temp = this.data[i1];
+      this.data[i1] = this.data[i2];
+      this.data[i2] = temp;
+  }
+
+  push(key) {
+      this.data.push(key);
+      this.heapifyUp();
+  }
+
+  heapifyUp() {
+      let idx = this.data.length - 1;
+      while (idx > 0) {
+          let parent = this.getParentIndex(idx);
+          if (this.data[idx] < this.data[parent]) {
+              this.swap(idx, parent);
+              idx = parent;
+          } else {
+              break;
+          }
+      }
+  }
+
+  poll() {
+      if (this.data.length === 0) return null;
+      if (this.data.length === 1) return this.data.pop();
+      let minValue = this.data[0];
+      this.data[0] = this.data.pop();
+      this.heapifyDown(0);
+      return minValue;
+  }
+
+  heapifyDown(idx) {
+      while (true) {
+          let smallest = idx;
+          let left = this.getLeftChildIndex(idx);
+          let right = this.getRightChildIndex(idx);
+          if (left < this.data.length && this.data[left] < this.data[smallest]) {
+              smallest = left;
+          }
+          if (right < this.data.length && this.data[right] < this.data[smallest]) {
+              smallest = right;
+          }
+          if (smallest !== idx) {
+              this.swap(idx, smallest);
+              idx = smallest;
+          } else {
+              break;
+          }
+      }
+  }
+
+  peek() {
+      return this.data[0];
+  }
+
+  isEmpty() {
+      return this.data.length === 0;
+  }
+
+  size() {
+      return this.data.length;
+  }
+}
+//TC: O(m * logn), SC: O(n)+O(n) ~ O(n)
+var isNStraightHand1 = function(hand, groupSize) {
+  let len = hand.length;
+  if (len % groupSize !== 0) return false;
+
+  let count = new Map();
+  for (let value of hand) { //O(n)
+      count.set(value, (count.get(value) || 0) + 1);
+  }
+
+  let minHeap = new MinHeap();
+  for (let value of count.keys()) { //O(m)
+      minHeap.push(value);
+  }
+
+  while (minHeap.size() > 0) { //O(m * logn) 
+      let currMin = minHeap.peek();
+      for (let i = currMin; i < currMin + groupSize; i++) {
+          if (!count.has(i)) return false;
+          count.set(i, count.get(i) - 1);
+          if (count.get(i) === 0) {
+              count.delete(i);
+              if(i !== minHeap.peek()) return false;
+              minHeap.poll();
+          }
+      }
+  }
+  return true;
+};
