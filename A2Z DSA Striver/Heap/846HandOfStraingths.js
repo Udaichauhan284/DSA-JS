@@ -101,3 +101,42 @@ const isNStraightHand =(hand, groupSize) => {
   return true;
 }
 console.log(isNStraightHand([1,2,3,6,2,3,4,7,8],3));
+
+//06 June 2024 - Leetcode POTD 
+/* In this we need to form a group from a hand in consecutive order
+of groupSize, for this we can take a Map, where we put the freq.
+TC: O(nlogn + n*groupSize) ~ O(nlogn), SC: O(n)
+*/
+var isNStraightHan1 = function(hand, groupSize) {
+  let len = hand.length;
+  // If len mod groupSize is not 0, these means we can't create groups
+  if (len % groupSize !== 0) return false;
+
+  let map = new Map();
+  // Setting the frequency of hands in the map
+  for (let value of hand) {
+      map.set(value, (map.get(value) || 0) + 1);
+  }
+
+  // Convert map to an array and sort it to ensure we process in order
+  let sortedKeys = Array.from(map.keys()).sort((a, b) => a - b);
+
+  // Iterate over sorted keys
+  for (let key of sortedKeys) {
+      let freq = map.get(key);
+      if (freq > 0) {
+          // Try to form a group starting from current key
+          for (let i = 0; i < groupSize; i++) {
+              let currKey = key + i;
+              if (map.get(currKey) == null || map.get(currKey) < freq) {
+                  return false; // If we can't form the group
+              }
+              map.set(currKey, map.get(currKey) - freq);
+              if (map.get(currKey) === 0) {
+                  map.delete(currKey); // Clean up map
+              }
+          }
+      }
+  }
+  return true;
+};
