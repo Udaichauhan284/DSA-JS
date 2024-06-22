@@ -120,3 +120,36 @@ const numberOfSubarrays3 = (nums,k) => {
   }
   return result;
 }
+
+/* Optimal Method - Sliding WIndow, same old template, just keep in 
+mind, take a prevCount also, when you srink the window, also
+add in prevCount, when num is odd, then oddcount also decrease
+when its evenm no change.
+TC: O(n), SC: O(1)
+*/
+//This is good method, to follow.
+var numberOfSubarrays4 = function(nums, k) {
+  let n = nums.length;
+  let prevCount = 0;
+  let oddCount = 0;
+  let result = 0;
+  let i=0, j=0;
+  while(j<n){
+      if(nums[j]%2 !== 0){ //ODD num
+          oddCount++;
+          //and initialize the prevCount to 0
+          prevCount = 0;
+      }
+      while(oddCount === k){
+          prevCount++;
+          //srink the window, move the i.
+          if(i<n && nums[i]%2 === 1){
+              oddCount--;
+          }
+          i++;
+      }
+      result += prevCount;
+      j++;
+  }
+  return result;
+};
