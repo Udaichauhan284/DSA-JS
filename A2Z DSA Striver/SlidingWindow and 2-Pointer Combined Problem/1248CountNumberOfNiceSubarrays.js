@@ -69,3 +69,54 @@ const numberOfSubarrays2 = (nums,k) => {
   return result;
 }
 console.log(numberOfSubarrays2([1,1,2,1,1],3));
+
+
+//22 June 2024, Leetcode POTD
+//1248 Count Number of Nice Subarrays
+/* This is same as Binary Subarray Sum as k, subarray sum as k(goal)
+*/
+/* Brute Method - use of two loop, inner loop start from i to n
+and count the currSum of nums, and check if currSum is equal to k or 
+not, if yes result++;
+TC: O(n^2), SC: O(1)
+*/
+// var numberOfSubarrays = function(nums, k) {
+//     let len = nums.length;
+//     let result = 0;
+//     for(let i=0; i<len; i++){
+//         let currSum = 0;
+//         for(let j=i; j<len; j++){
+//             currSum += nums[j]%2;
+//             if(currSum === k){
+//                 result++;
+//             }
+//         }
+//     }
+//     return result;
+// };
+
+/*Better Method - we are finding currSum, so its good to store currSum
+in Map and futher check if currSum-k present in map or not, if yes
+increase the result and if not, so put in map.
+TC: O(n), SC: O(n)
+*/
+const numberOfSubarrays3 = (nums,k) => {
+  let result = 0;
+  let currSum = 0;
+  let map = {};
+  map[0] = 1;
+  for(let num of nums){
+      currSum += num%2;
+      let remainingSum = currSum-k
+      if(map[remainingSum]){
+          result += map[remainingSum];
+      }
+      
+      if(!map[currSum]){
+          map[currSum] = 1;
+      }else{ //if currSum in map we increase the count of currSum
+          map[currSum]++;
+      }
+  }
+  return result;
+}
