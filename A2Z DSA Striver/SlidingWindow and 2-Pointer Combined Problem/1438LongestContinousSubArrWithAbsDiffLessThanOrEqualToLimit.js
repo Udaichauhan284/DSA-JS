@@ -212,3 +212,38 @@ var longestSubarray = function (nums, limit) {
   }
   return maxlength;
 };
+
+
+/* using map which similuate multiset, cause TLE
+TC: O(n^2), SC: O(n), test case passing, but giving the TLE.
+use this as Brute Method, then optimize it with MaxHeap and Min Heap.
+*/
+var longestSubarray = function(nums, limit) {
+  const n = nums.length;
+    const map = new Map();  // Use a map to simulate the multiset
+    let i = 0;
+    let j = 0;
+    let maxLength = 0;
+
+    while (j < n) {
+      // Insert nums[j] into the map
+      map.set(nums[j], (map.get(nums[j]) || 0) + 1);
+
+      // Check if the current window is valid
+      if (Math.max(...map.keys()) - Math.min(...map.keys()) > limit) {
+        // Remove nums[i] from the map
+        if (map.get(nums[i]) === 1) {
+          map.delete(nums[i]);
+        } else {
+          map.set(nums[i], map.get(nums[i]) - 1);
+        }
+        i++;
+      }
+
+      // Update maxLength with the length of the current valid window
+      maxLength = Math.max(maxLength, j - i + 1);
+      j++;
+    }
+
+    return maxLength;
+};
