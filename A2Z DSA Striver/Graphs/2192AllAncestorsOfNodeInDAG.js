@@ -12,6 +12,42 @@ The above diagram represents the input graph.
 
 */
 
+/*Brute Method
+TC: O(n^2 + nE)
+SC: O(n^2 + E)
+*/
+var getAncestors = function(n, edges) {
+  let result = Array.from({ length: n }, () => []);
+  let adjList = Array.from({ length: n }, () => []);
+
+  // Create adjacency list
+  for (let [u, v] of edges) {
+      adjList[u].push(v);
+  }
+
+  for (let i = 0; i < n; i++) {
+      let visited = Array(n).fill(false); // Reset visited array for each node
+      DFS(i, visited, adjList);
+      for (let j = 0; j < n; j++) {
+          if (visited[j] === true && i !== j) {
+              result[j].push(i);
+          }
+      }
+  }
+
+  return result;
+};
+
+function DFS(currNode, visited, adjList) {
+  visited[currNode] = true;
+  for (let adjNode of adjList[currNode]) {
+      if (!visited[adjNode]) {
+          DFS(adjNode, visited, adjList);
+      }
+  }
+}
+
+
 /* Better Method, use of DFS
 TC: O(n*(n+m)), SC: O(n*m)
 */
