@@ -16,7 +16,7 @@ function LowerBound(arr, target){
   while(low <= high){
     let mid = Math.floor((low + high)/2);
     if(arr[mid] >= target){
-      ans = mid; //assume that it will my ans and chage ans value to new mid, and also if arr[mid] > target, Now need to search in right half
+      ans = mid; //assume that it will my ans and chage ans value to new mid, and also if arr[mid] > target, Now need to search in left half
       high = mid - 1;
     }else {
       low = mid + 1; // search in right half;
