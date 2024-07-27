@@ -70,7 +70,7 @@ class MinHeap{
       if(left < this.data.length && this.data[left][0] < this.data[smallest][0]){
         smallest = left;
       }
-      if(right < this.data.length && this.data[right][0] < this.data[samllest][0]){
+      if(right < this.data.length && this.data[right][0] < this.data[smallest][0]){
         smallest = right;
       }
       if(smallest !== idx){
