@@ -21,6 +21,62 @@ The red path shows the path to get the second minimum time.
 Hence the second minimum time is 13 minutes.
 */
 
+//Fiest solve BFS and then solve for Dijkstra's Algo
+
+/*Method2- use of BFS, as we need to go from 1 to n node, in minTime and 
+need to find the secondMinTime, we can use BFS, we traverse level wise, for each level, 
+signal change will be same, green or red, for finding which zine we are we already use
+ttimePassed/change, and timePassed will get from freq 1 or 2, in 2 travere we will get our 
+secondMinTime
+TC: O(V+E)
+SC: O(v+e)
+*/
+var secondMinimum = function(n, edges, time, change) {
+  let adj = Array.from({length: n+1}, () => []);
+  for(let [u,v] of edges){
+      adj[u].push(v);
+      adj[v].push(u);
+  }
+  let minTime = Array(n+1).fill(Number.MAX_VALUE);
+  let secondMinTime = Array(n+1).fill(Number.MAX_VALUE);
+  //in this we need queue
+  let queue = [];
+  queue.push([1,1]); //node, freq-how many time node accessed
+  minTime[1] = 0; //for first node time will be 0.
+
+  while(queue.length > 0){
+      let [node, freq] = queue.shift();
+      let timePassed = (freq === 1) ? minTime[node] : secondMinTime[node];
+      //check the main condition for ans
+      if(node === n && secondMinTime[node] !== Number.MAX_VALUE){
+          return secondMinTime[node];
+      }
+      //now check in which zone it is, can we move or not
+      let div = Math.floor(timePassed / change);
+      if(div % 2 === 1){
+          //odd, red zone, cant move, need to wait for next change cycle, for that
+          timePassed = (div+1) * change;
+      }
+
+      //move to nextnode
+      for(let nextNode of adj[node]){
+          let currTime = timePassed + time;
+          if(minTime[nextNode] === Number.MAX_VALUE){
+              minTime[nextNode] = currTime;
+              queue.push([nextNode, 1]); //1 because 1st traverse and filling minTime
+          }else if(secondMinTime[nextNode] === Number.MAX_VALUE && minTime[nextNode] !== currTime){
+              secondMinTime[nextNode] = currTime;
+              queue.push([nextNode, 2]); //2 because 2nd traverse and filling secondMin
+          }
+      }
+  }
+  return -1;
+};
+
+
+
+
+
 class MinHeap {
   constructor() {
       this.data = [];
