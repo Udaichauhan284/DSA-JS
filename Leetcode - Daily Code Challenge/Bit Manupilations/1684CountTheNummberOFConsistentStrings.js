@@ -39,7 +39,7 @@ mask = 0000 then we do OR of mask left shit by ch
 then we find the set bit from words in nested loops
 TC: O(n*m), SC: O(1)
 */
-var countConsistentStrings = function(allowed, words) {
+var countConsistentStrings1 = function(allowed, words) {
   let mask = 0; //000000000
   for(let ch of allowed){
       mask |= (1 << (ch.charCodeAt(0) - 'a'.charCodeAt(0)));
