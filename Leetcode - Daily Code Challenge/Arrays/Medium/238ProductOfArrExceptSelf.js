@@ -132,7 +132,7 @@ can directly multiple in ans for prefix and for suffix
 we need to take extra varibale and it worl
 TC: O(n), SC: O(1)
 */
-var productExceptSelf = function(nums) {
+var productExceptSelf3 = function(nums) {
   let len = nums.length;
   let ans = Array(len).fill(1);
 
