@@ -33,7 +33,7 @@ class LinkedList {
     const node = new Node(value);
     if(this.isEmpty()){
       this.head = node;
-      tjis.tail = node;
+      this.tail = node;
     }else{
       node.next = this.head;
       this.head = node;
