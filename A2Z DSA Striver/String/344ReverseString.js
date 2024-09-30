@@ -25,3 +25,21 @@ const reverseString = (s) => {
   }
   return s;
 };
+
+
+//Use of Recurion
+//apply the same logic of left and right pointer but use that in recursion
+class Solution {
+  reverseStr(s){
+    this.reverseIt(s, 0, s.length-1);
+    return s; 
+  }
+  reverseIt(s, left, right){
+    if(left >= right){
+      return;
+    }
+    //swap it
+    [s[left], s[right]] = [s[right], s[left]];
+    this.reverseIt(s, left+1, right-1);
+  }
+}
