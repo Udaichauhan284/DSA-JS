@@ -21,3 +21,21 @@ function prime(n){
   return false;
 }
 console.log(prime(31));
+
+
+
+
+class Solution {
+  isPrime(n) {
+        //your code goes here
+        if(n < 2){
+          return false; //edge case, Prime start from 2
+        }
+        for(let i=2; i<=Math.sqrt(n); i++){
+          if(n % i === 0){
+            return false;
+          }
+        }
+        return true;
+  }
+}
