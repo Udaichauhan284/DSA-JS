@@ -18,11 +18,12 @@ SC: O(k)
 var smallestRange = function (nums) {
   let k = nums.length;
   let listPointerArr = Array(k).fill(0); //[0,0,0];
-  let result = [-1000000, 1000000]; //for ans 
+  let startRange = 0;
+  let endRange = Infinity;
 
   while (true) {
-      let minEl = Number.MAX_VALUE;
-      let maxEl = Number.MIN_VALUE;
+      let minEl = Infinity;
+      let maxEl = -Infinity;
       let minElListIdx = 0;
       //now find the range, traverse in listPointerArr
       for(let i=0; i<k; i++){
@@ -36,9 +37,9 @@ var smallestRange = function (nums) {
           maxEl = Math.max(maxEl, element);
       }
       //now compare with result range
-      if(maxEl - minEl < result[1] - result[0]){
-          result[0] = minEl;
-          result[1] = maxEl;
+      if(maxEl - minEl < endRange - startRange){
+          startRange = minEl;
+          endRange = maxEl;
       }
       //now short the range with moving the minEl
       let nextIndex = listPointerArr[minElListIdx]+1;
@@ -47,5 +48,44 @@ var smallestRange = function (nums) {
       }
       listPointerArr[minElListIdx] = nextIndex;
   }
-return result;
+return [startRange, endRange];
+};
+
+
+/*Optimal Method, previously we have managing the arr of k size
+for getting the min and max value, so for minvalue, we can have
+minHeap and in that we push [minValue, listIdx, elementIdx]
+and the same logic will be same for finding the range.
+TC: O(n * log(k)), SC: O(n)
+*/
+var smallestRange = function(nums) {
+  let k = nums.length;
+  const minHeap = new MinPriorityQueue({priority: x => x[0]});
+  let maxValue = -Infinity;
+  //now fill the minHeap
+  for(let i=0; i<k; i++){
+      minHeap.enqueue([nums[i][0], i, 0]); //minValue, listIdx, elemIdx
+      maxValue = Math.max(maxValue, nums[i][0]);
+  }
+  let startRange = 0;
+  let endRange = Infinity;
+  while (!minHeap.isEmpty()) {
+      const [minValue, row, col] = minHeap.dequeue().element;
+      
+      // Update the smallest range
+      if (maxValue - minValue < endRange - startRange) {
+          startRange = minValue;
+          endRange = maxValue;
+      }
+      
+      // Move to the next element in the current list
+      let nextIndex = col+1;
+      if (nextIndex < nums[row].length) {
+          minHeap.enqueue([nums[row][nextIndex], row, nextIndex]);
+          maxValue = Math.max(maxValue, nums[row][nextIndex]);
+      } else {
+          break; // One list is exhausted
+      }
+  }
+  return [startRange, endRange];
 };
