@@ -3,7 +3,7 @@ it is a comparison based sorting algo, base onn Binary Heap DS. it is similar to
 Algo : convert the arr to Heap using Heapify and then remove the top node, replace the last node with it then again form max heap using Heapify, repeat this till heap length is equal to 1.
 */
 //given array change to maxHeap, using heapify and then start the loop from back, smaller eleme will be at last and swap that small one with large one at first
-//TC: O(nlogn) + O(nlog) ~ O(2nlogn) ~ O(nlogn), SC : O(1), recursion Heapify : O(logN)
+//TC: O(n) + O(nlog) ~ O(2nlogn) ~ O(nlogn), SC : O(1), recursion Heapify : O(logN)
 const heapSort = (arr) => {
   let len = arr.length;
   for(let i=Math.floor(len/2)-1; i>=0; i--){
