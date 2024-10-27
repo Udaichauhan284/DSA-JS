@@ -51,6 +51,8 @@ var countSquares = function (matrix) {
   return sum;
 };
 
+
+//This is the good approach follow this
 //Leetcode POTD on 27 Oct 2024
 /*in this for creating the sqaure we need to move right, below, diagonal
 for creating the square we will take min of all these 3 side.
@@ -90,3 +92,29 @@ function solve(i,j,n,m,matrix,dp){
     dp[i][j] = 1 + Math.min(right,below,digonal);
     return dp[i][j];
 }
+
+
+/*Approach Bottom Up DP method
+TC: O(n*m), SC: O(n*m)
+*/
+var countSquares = function(matrix) {
+    let n = matrix.length;
+    let m = matrix[0].length;
+    let result = 0;
+    let dp = Array.from({length: n}, () => Array(m).fill(0));
+
+    for(let i=0; i<n; i++){
+        for(let j=0; j<m; j++){
+            if(i===0 || j===0){ //base case 0th row and 0thcol in matrix
+                dp[i][j] = matrix[i][j]; //is 1 in dp[0][0]=1, if 0 then 0
+            }else{
+                //now check for 1s
+                if(matrix[i][j] === 1){
+                    dp[i][j] = 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+                }
+            }
+            result += dp[i][j];
+        } 
+    }
+    return result;
+};
