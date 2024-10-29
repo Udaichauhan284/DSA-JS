@@ -14,18 +14,18 @@ num and then check root*root === num if yes then we check in map
 is map have have that num in yes, increase the streak
 TC: O(nlogn), SC: O(n)
 */
-var longestSquareStreak = function(nums) {
+var longestSquareStreak = function (nums) {
   let map = new Map();
-  nums.sort((a,b) => a-b);
+  nums.sort((a, b) => a - b);
   let maxStreak = 0;
-  for(let num of nums){
-      let root = parseInt(Math.sqrt(num));
-      if((root*root) === num && map.has(root)){
-          map.set(num, (map.get(root) || 0)+1);
-      }else{
-          map.set(num, 1);
-      }
-      maxStreak = Math.max(maxStreak, map.get(num));
+  for (let num of nums) {
+    let root = parseInt(Math.sqrt(num));
+    if (root * root === num && map.has(root)) {
+      map.set(num, (map.get(root) || 0) + 1);
+    } else {
+      map.set(num, 1);
+    }
+    maxStreak = Math.max(maxStreak, map.get(num));
   }
   return maxStreak < 2 ? -1 : maxStreak;
 };
