@@ -51,3 +51,50 @@ function countBit(nums){
     }
     return count;
 }
+
+/*In method2, we will divide the region of same bit and than we will
+find the max and min in that segment and than check for curr segment
+min with prevMax. TC: O(n), SC: O(1)
+*/
+const canSortArray = (nums) => {
+    let len = nums.length;
+    let minEle = nums[0];
+    let maxEle = nums[0];
+    let numOfSetBit = countSetBit(nums[0]);
+
+    let maxPrevOfSegment = Number.MIN_VALUE;
+
+    for(let i=1; i<len; i++){
+        //now check the set bit of two adjacent
+        if(countSetBit(nums[i]) === numOfSetBit){
+            //find the max and min of that segment
+            minEle = Math.min(maxEle, nums[i]);
+            maxEle = Math.max(maxEle, nums[i]);
+        }else{
+            //measn they dont have same bit and belong into different segment
+            //first check the minEle with max of prev
+            if(minEle < maxPrevOfSegment){
+                return false;
+            }
+            //update the maxPrev
+            maxPrevOfSegment = maxEle;
+
+            //now update the current segment
+            minEle = nums[i];
+            maxEle = nums[i];
+            numOfSetBit = countSetBit(nums[i]);
+        }
+    }
+    if(minEle < maxPrevOfSegment){
+        return false;
+    }
+    return true;
+}
+function countSetBit(num){
+    let count = 0;
+    while(num !== 0){
+        num = num & (num-1);
+        count++;
+    }
+    return count;
+}
