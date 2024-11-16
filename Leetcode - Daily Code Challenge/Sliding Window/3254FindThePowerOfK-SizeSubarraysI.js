@@ -35,3 +35,42 @@ const resultsArray = (nums, k) => {
   }
   return result;
 };
+
+/*Method 2-in this we use Sliding Window, for first one, we use
+simply for loop till k and then find the ans in 1. and for next
+window we use SLiding Window. TC: O(n), SC: O(1)
+*/
+var resultsArray = function(nums, k) {
+  let len = nums.length;
+  let result = Array(len-k+1).fill(-1);
+  let count = 1;
+  //for first iteration
+  for(let i=1; i<k; i++){
+      if(nums[i] === nums[i-1]+1){
+          //if curr one is equal to prev one, measn consecutive
+          count++;
+      }else{
+          count = 1;
+      }
+  }
+  if(count === k){
+      result[0] = nums[k-1];
+  }
+  //now we use sliding window
+  let i=1; //after first fill i will move to next one
+  let j=k;
+  while(j < len){
+      if(nums[j] === nums[j-1]+1){
+          count++;
+      }else{
+          count=1;
+      }
+
+      if(count >= k){
+          result[i] = nums[j];
+      }
+      i++;
+      j++;
+  }
+  return result;
+};
