@@ -40,7 +40,7 @@ const resultsArray = (nums, k) => {
 simply for loop till k and then find the ans in 1. and for next
 window we use SLiding Window. TC: O(n), SC: O(1)
 */
-var resultsArray = function(nums, k) {
+const resultsArray1 = function(nums, k) {
   let len = nums.length;
   let result = Array(len-k+1).fill(-1);
   let count = 1;
