@@ -29,3 +29,41 @@ const decrypt = (code, k) => {
   }
   return result;
 }
+
+/*Method2- use of Sliding Window, we first take out the 
+windowSum for all elem in code, then we use sliding Window
+then we minus the prev one and add new one. for k > 0
+sliding window i=1, j=k, for k < 0 sliding window i=n-abs(k)
+j=n-1 TC: O(n), SC: O(1)
+*/
+var decrypt = function(code, k) {
+  let len = code.length;
+  let result = Array(len).fill(0);
+  if(k === 0){
+      return result;
+  }
+  //now set the ponuter of sliding window 
+  let start = 1;
+  let end = k;
+  if(k < 0){
+      start = len - Math.abs(k);
+      end = len - 1;
+  }
+  //first take out the all windowSUm
+  let windowSum = 0;
+  for(let i=start; i<=end; i++){
+      windowSum += code[i];
+  }
+  for(let ptr=0; ptr<len; ptr++){
+      result[ptr] = windowSum;
+
+      //now minus the prevone
+      windowSum -= code[start % len];
+      start++;
+
+      //mow add the next one
+      windowSum += code[(end+1)%len];
+      end++;
+  }
+  return result;
+};
