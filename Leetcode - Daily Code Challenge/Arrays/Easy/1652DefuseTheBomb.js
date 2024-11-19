@@ -36,7 +36,7 @@ then we minus the prev one and add new one. for k > 0
 sliding window i=1, j=k, for k < 0 sliding window i=n-abs(k)
 j=n-1 TC: O(n), SC: O(1)
 */
-var decrypt = function(code, k) {
+var decrypt1 = function(code, k) {
   let len = code.length;
   let result = Array(len).fill(0);
   if(k === 0){
