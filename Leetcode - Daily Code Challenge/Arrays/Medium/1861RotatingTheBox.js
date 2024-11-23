@@ -50,3 +50,42 @@ var rotateTheBox = function (box) {
   }
   return result;
 };
+
+/*Method 2-first use Transpose and then reverse the row
+so that we get the 90deg of box. then apply gravity on
+box.
+TC: O(col * row)
+*/
+var rotateTheBox = function (box) {
+  let m = box.length;
+  let n = box[0].length;
+
+  let result = Array.from({ length: n }, () => Array(m));
+
+  //transpose
+  for (let i = 0; i < n; i++) {
+      for (let j = 0; j < m; j++) {
+          result[i][j] = box[j][i];
+      }
+  }
+  //now reverse the row for 90deg rotate
+  for (let row of result) {
+      row.reverse();
+  }
+  //now apply gravity
+  for(let j=0; j<m; j++){
+      let spaceBottom = n-1;
+      for(let i=n-1; i>=0; i--){
+          if(result[i][j] === "*"){
+              spaceBottom = i-1;
+              continue;
+          }
+          if(result[i][j] === "#"){
+              result[i][j] = ".";
+              result[spaceBottom][j] = "#";
+              spaceBottom--;
+          }
+      }
+  }
+  return result;
+};
