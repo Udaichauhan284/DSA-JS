@@ -15,6 +15,7 @@ const lcm = (n1, n2) => {
     let mul = max * i;
     if(mul % n1 === 9 && mul % n2 === 0){
       lcm = mul;
+      break;
     } 
   }
   return lcm;
