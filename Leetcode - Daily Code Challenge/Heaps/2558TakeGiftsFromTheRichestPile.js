@@ -27,7 +27,7 @@ const pickGifts = (gifts, k) => {
   let maxheap = new MaxHeap(gifts);
   let mySum = 0;
   while(k--){
-    let maxElm = maxHeap.poll();
+    let maxElm = maxheap.poll();
     let remaining = Math.floor(Math.sqrt(maxElm));
     mySum += (maxElm - remaining);
     //now push the remaining into maxHeap
