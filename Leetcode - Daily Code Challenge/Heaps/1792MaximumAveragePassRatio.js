@@ -45,3 +45,103 @@ var maxAverageRatio = function(classes, extraStudents) {
   }
   return result/len;
 };
+
+
+/*In Optimal Method, we use the MaxHeap, to find the maxDelta and in that
+we add the extra student so that we find the max average,
+TC: O(extraStudents * logn), SC: O(n)
+*/
+var maxAverageRatio = function(classes, extraStudents) {
+  let len = classes.length;
+  let maxHeap = new MaxHeap();
+  for(let i=0; i<len; i++){
+      //here we find the current PR and updatePR, after adding one
+      //to it.and then we find the difference and store that into
+      //maxHeap
+      let currPR = classes[i][0] / classes[i][1];
+      let newPR = (classes[i][0]+1) / (classes[i][1] + 1);
+      let delta = newPR - currPR;
+      maxHeap.push([delta, i]);
+  }
+  while(extraStudents--){
+      let [maxDelta, idx] = maxHeap.poll();
+      //we only need the idx, maxHeap will sort based on delta
+      //add students into that idx
+      classes[idx][0]++;
+      classes[idx][1]++;
+      //now we need to find the for the next student, PR and push into
+      //maxHeap
+      currPR = classes[idx][0] /classes[idx][1];
+      newPR = (classes[idx][0]+1) / (classes[idx][1] + 1);
+      delta = newPR-currPR;
+      maxHeap.push([delta, idx]);
+  }
+  let result = 0;
+  for(let i=0; i<len; i++){
+      result += classes[i][0] / classes[i][1];
+  }
+  return result / len;
+};
+class MaxHeap{
+  constructor(){
+      this.data = [];
+  }
+  getParentIndex(idx){
+      return Math.floor((idx-1)/2);
+  }
+  getLeftChildIndex(idx){
+      return idx * 2 + 1;
+  }
+  getRightChildIndex(idx){
+      return idx * 2 + 2;
+  }
+  swap(i1, i2){
+      [this.data[i1], this.data[i2]] = [this.data[i2], this.data[i1]];
+  }
+  push(pair){
+      this.data.push(pair);
+      this.heapifyUp();
+  }
+  heapifyUp(){
+      let idx = this.data.length-1;
+      while(idx>0){
+          let parent = this.getParentIndex(idx);
+          if(this.data[idx][0] > this.data[parent][0]){
+              this.swap(idx, parent);
+              idx = parent;
+          }else{
+              break;
+          }
+      }
+  }
+  poll(){
+      if(this.data.length === 0) return null;
+      if(this.data.length === 1) return this.data.pop();
+      let maxValue = this.data[0];
+      this.data[0] = this.data.pop();
+      this.heapifyDown(0);
+      return maxValue;
+  }
+  heapifyDown(idx){
+      while(true){
+          let largest = idx;
+          let left = this.getLeftChildIndex(idx);
+          let right = this.getRightChildIndex(idx);
+          if(left < this.data.length && this.data[left][0] > this.data[largest][0]){
+              largest = left;
+          }
+          if(right < this.data.length && this.data[right][0] > this.data[largest][0]){
+              largest = right;
+          }
+          if(largest !== idx){
+              this.swap(idx, largest);
+              idx = largest;
+          }else{
+              break;
+          }
+      }
+  }
+  isEmpty(){
+      return this.data.length === 0;
+  }
+}
