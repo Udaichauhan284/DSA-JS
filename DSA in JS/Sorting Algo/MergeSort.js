@@ -68,3 +68,48 @@ function merge(nums, low, mid, high){
       nums[i] = temp[i-low];
   }
 }
+
+
+//FROM Geeks for Geeks
+class Solution {
+  //TC: O(nlogn), SC: O(n) recursion stack space
+  mergeSort(arr, l, r) {
+      // code here
+      if(l >= r){
+          return;
+      }
+      let mid = l + Math.floor((r-l)/2);
+      this.mergeSort(arr, l, mid);
+      this.mergeSort(arr, mid+1, r);
+      this.merge(arr, l, mid, r);
+  }
+  merge(arr, l, mid, r){
+      let left = l;
+      let right = mid+1;
+      let temp = [];
+      while(left <= mid && right <= r){
+          if(arr[left] <= arr[right]){
+              temp.push(arr[left]);
+              left++;
+          }else{
+              temp.push(arr[right]);
+              right++;
+          }
+      }
+      
+      while(left <= mid){
+          temp.push(arr[left]);
+          left++;
+      }
+      
+      while(right <= r){
+          temp.push(arr[right]);
+          right++;
+      }
+      
+      //now from temp to arr
+      for(let i=l; i<=r; i++){
+          arr[i] = temp[i-l];
+      }
+  }
+}
