@@ -34,3 +34,36 @@ function QuickSort(arr){
 }
 let Arr = [-6,20,8,16,-2,4];
 console.log(QuickSort(Arr));
+
+
+//This is best way of Implementing the Quick Sort
+class Solution {
+  //TC: O(nlogn) in average case, WorstCase: O(n^2), SC: O(n)
+  partition(arr, low, high) {
+      // Your code here
+      let pivot = arr[high]; //we take the last ele as pivot
+      let partitionIndex = low;
+      for(let i=low; i<high; i++){
+          if(arr[i] <= pivot){
+              //swap
+              [arr[i], arr[partitionIndex]] = [arr[partitionIndex], arr[i]];
+              partitionIndex++;
+          }
+      }
+      //now swap the patitionIndex and high
+      [arr[partitionIndex], arr[high]] = [arr[high], arr[partitionIndex]];
+      return partitionIndex;
+  }
+
+  quickSort(arr, low, high) {
+      // code here
+      //base case
+      if(low >= high){
+          return;
+      }
+      let partitionIndex = this.partition(arr, low, high);
+      //now call for left side and right side
+      this.quickSort(arr, low, partitionIndex-1);
+      this.quickSort(arr, partitionIndex+1, high);
+  }
+}
