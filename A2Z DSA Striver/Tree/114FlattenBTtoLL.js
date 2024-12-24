@@ -25,40 +25,29 @@ const flatten = (root) => {
   preOrder(root);
 }
 
-//MEthod 2 - use of Morris Traversal
-const flatten1 = (root) => {
-  while(root){
-    if(root.left){
-      let curr = root.left;
 
-      while(curr.right){
-        curr = curr.right;
-      }
-
-      //now change the right and left
-      curr.right = root.right;
-      root.right = root.left;
-      root.left = null;
-    }
-    root = root.right;
-  }
-}
 //or
-const flatten2 = (root) => {
-  while(root){
-    if(!root.left){
-      root = root.right;
-    }else{
-      //left exists
-      let curr = root.left;
-      while(curr.right){
-        curr = curr.right;
+class Solution {
+  // Function to flatten the binary tree into linked list.
+  //IN rhis we use Morris Traversal TC: O(n), SC: O(1)
+  flatten(root) {
+      // your code here
+      while(root){
+          if(!root.left){
+              root = root.right;
+          }
+          else{
+              let curr = root.left;
+              while(curr.right){ //go to the right most of left child
+                  curr = curr.right;
+              }
+              //now point currRight to root right
+              curr.right = root.right;
+              //now root right become root.left
+              root.right = root.left;
+              root.left = null;
+              root = root.right;
+          }
       }
-
-      curr.right = root.right;
-      root.right = root.left;
-      root.left = null; //break the left
-      root = root.right; //move to right
-    }
   }
 }
