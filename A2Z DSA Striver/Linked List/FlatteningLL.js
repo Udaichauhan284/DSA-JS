@@ -74,3 +74,30 @@ function mergeLL(list1, list2){
   }
   return dummyNode.next;
 }
+
+//Best Method: TC; O(m * n *n), SC: O(n *m)
+class Solution {
+  //TC: O(m * n * n), SC: O(n*m)
+  flatten(head) {
+      // your code here
+      if(head === null) return null;
+      
+      let head2 = this.flatten(head.next);
+      //now this recursion will sort the next list and return into the head2
+      //now merge the both the list
+      return this.mergeSortList(head, head2);
+  }
+  mergeSortList(head, head2){
+      if(!head) return head2;
+      if(!head2) return head;
+      
+      //now compare both heads value
+      if(head.data < head2.data){
+          head.bottom = this.mergeSortList(head.bottom, head2);
+          return head;
+      }else{
+          head2.bottom = this.mergeSortList(head, head2.bottom);
+          return head2;
+      }
+  }
+}
