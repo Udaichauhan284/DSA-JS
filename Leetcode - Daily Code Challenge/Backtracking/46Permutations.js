@@ -32,3 +32,30 @@ function solve(nums, temp, result, used){
     used.delete(nums[i]);
 }
 }
+
+
+/*2 Jan 2025, Method 2, use of swap method
+in backtracking swap of i and idx
+TC: O(n + n!), SC: O(n)
+*/
+var permute1 = function(nums) {
+  let result = [];
+  solve(0, nums, result);
+  return result;
+};
+function solve(idx, nums, result){
+  //base case
+  if(idx === nums.length){
+      result.push([...nums]);
+      return;
+  }
+
+  //now iterate over the nums
+  for(let i=idx; i<nums.length; i++){
+      //now swap 
+      [nums[i], nums[idx]] = [nums[idx], nums[i]];
+      solve(idx+1, nums, result); //Explore
+      //now again swap, undo
+      [nums[i], nums[idx]] = [nums[idx], nums[i]];
+  }
+}
