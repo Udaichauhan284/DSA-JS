@@ -40,7 +40,7 @@ const maxScore = (s) => {
 if traverse from left to right, so we will see if we get the ones
 TC: O(n), SC: O(1)
 */
-var maxScore = function(s) {
+var maxScore1 = function(s) {
   let len = s.length;
   let ones = 0;
   //first count the ones
