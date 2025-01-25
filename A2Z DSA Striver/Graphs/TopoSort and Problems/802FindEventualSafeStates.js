@@ -139,7 +139,7 @@ indegree and while traversing over node, decrease the indegree, when indegree is
 we add in queue, for futher. 
 TC: O(V+E), SC: O(V+E) for adj graph
 */
-var eventualSafeNodes = function(graph) {
+var eventualSafeNodes2 = function(graph) {
   let v = graph.length;
   let safeNodes = []; //return ans
   let safe = Array(v).fill(false);
