@@ -89,3 +89,34 @@ var numOfSubarrays = function(arr) {
     }
     return count;
 };
+
+
+/*Method 4 optimal method , but without use of Extra space, just use
+of variable. TC: O(n), SC: O(1)
+*/
+var numOfSubarrays = function(arr) {
+    let len = arr.length;
+    let mod = 1e9 + 7;
+    let sum = 0;
+
+    let evenSumCount = 1;
+    let oddSumCount = 0;
+    let count = 0;
+
+    for(let i=0; i<len; i++){
+        sum += arr[i];
+
+        if(sum % 2 === 0){
+            //measn we have even, so check prev odd count
+            //even + odd = odd
+            count = (count + oddSumCount) % mod;
+            evenSumCount++;
+        }else{
+            //meas we have odd, so check prev even Count
+            //odd+even = odd
+            count = (count + evenSumCount) % mod;
+            oddSumCount++;
+        }
+    }
+    return count;
+};
