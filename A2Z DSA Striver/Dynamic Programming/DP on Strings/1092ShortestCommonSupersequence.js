@@ -57,3 +57,5 @@ var shortestCommonSupersequence = function (str1, str2) {
   ans = ans.split("").reverse().join("");
   return ans;
 };
+
+//28 Feb 25, I will try another method, later this evening
