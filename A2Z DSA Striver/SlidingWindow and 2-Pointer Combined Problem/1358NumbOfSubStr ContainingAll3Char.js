@@ -33,3 +33,33 @@ const numberOfSubstrings = (s) => {
   }
   return count;
 }
+
+
+/*11/03/25, Optimal method,using the sliding window
+we take a array of size 3, in that we keep the track of
+char
+TC: O(2*n)~O(n), SC: O(3)~O(1)
+*/
+const numberOfSubstrings1 = (s) => {
+  let len = s.length;
+  let hash = Array(3).fill(0);
+  let i=0, j=0;
+  let count = 0;
+
+  //sliding window
+  while(j < len){
+    //increase the freq of char in hash
+    hash[s.charCodeAt(j) - 'a'.charCodeAt(0)]++;
+
+    while(hash[0] > 0 && hash[1] > 0 && hash[2] > 0){
+      //all 3 char is there, find the result
+      count += (len - j);
+
+      //now remove the freq from i
+      hash[s.charCodeAt(i) - 'a'.charCodeAt(0)]--;
+      i++;
+    }
+    j++;
+  }
+  return count;
+}
