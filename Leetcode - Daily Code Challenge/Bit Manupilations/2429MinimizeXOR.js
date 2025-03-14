@@ -49,3 +49,41 @@ function setBit(x, bit) {
 function unsetBit(x, bit) {
   return x & ~(1 << bit);
 }
+
+
+
+//14 March 25, This is good method
+//TC: O(logn), SC O(1)
+var minimizeXor = function (num1, num2) {
+  //find the set bits in nums2
+  let setBits = countSetBits(num2);
+  let bits = 31;
+  let res = 0;
+  while (bits >= 0 && setBits > 0) {
+      //check if bits is set in num1 and if som set the bits in
+      //res
+      if ((num1 & (1 << bits)) !== 0) {
+          res = res | (1 << bits)
+          setBits--;
+      }
+      bits--;
+  }
+
+  bits = 0;
+  while (setBits > 0 && bits < 32) {
+      if ((num1 & (1 << bits)) === 0) {
+          res = res | (1 << bits);
+          setBits--;
+      }
+      bits++;
+  }
+  return res;
+};
+function countSetBits(n){
+  let count = 0;
+  while(n > 0){
+      n = n & (n-1);
+      count++;
+  }
+  return count;
+}
