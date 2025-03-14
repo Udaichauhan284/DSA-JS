@@ -44,3 +44,21 @@ var doesValidArrayExist = function(derived) {
     }
     return xor === 0;
 };
+
+
+/*14 March 25, in this question from original array
+every elem is comming twice A^B = derived[0],
+B^C = derved[1], C^A=derived[2], so A cancels A
+like that, so at last, if all xor is zero, original
+array is present, return true, TC: O(n), SC: O(1)
+*/
+var doesValidArrayExist = function(derived) {
+    let xor = 0;
+    for(let num of derived){
+        xor ^= num;
+    }
+    if(xor === 0){
+        return true;
+    }
+    return false;
+};
