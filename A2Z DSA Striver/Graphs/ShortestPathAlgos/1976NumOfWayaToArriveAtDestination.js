@@ -118,3 +118,109 @@ var countPaths = function (n, roads) {
   }
   return ways[n - 1] % mod;
 };
+
+
+
+
+/*
+23 March 25, Leetcode POTD, Solved using the MinHeap, as we need
+the mini time and use the Dijkstra Algo's
+TC: O(v+elogv), SC: O(v+e)
+*/
+class MinHeap {
+  constructor() {
+      this.data = [];
+  }
+  getParentIndex(idx) {
+      return Math.floor((idx - 1) / 2);
+  }
+  getLeftChildIndex(idx) {
+      return idx * 2 + 1
+  }
+  getRightChildIndex(idx) {
+      return idx * 2 + 2;
+  }
+  swap(i1, i2) {
+      [this.data[i1], this.data[i2]] = [this.data[i2], this.data[i1]];
+  }
+  push(pair) {
+      this.data.push(pair);
+      this.heapifyUp();
+  }
+  heapifyUp() {
+      let idx = this.data.length - 1;
+      while (idx > 0) {
+          let parentIndex = this.getParentIndex(idx);
+          if (this.data[idx][0] < this.data[parentIndex][0]) {
+              this.swap(idx, parentIndex);
+              idx = parentIndex;
+          } else {
+              break;
+          }
+      }
+  }
+  poll() {
+      if (this.data.length === 0) return null;
+      if (this.data.length === 1) return this.data.pop();
+      let minValue = this.data[0];
+      this.data[0] = this.data.pop();
+      this.heapifyDown(0);
+      return minValue;
+  }
+  heapifyDown(idx) {
+      while (true) {
+          let smallest = idx;
+          let left = this.getLeftChildIndex(idx);
+          let right = this.getRightChildIndex(idx);
+          if (
+              left < this.data.length &&
+              this.data[left][0] < this.data[smallest][0]
+          ) {
+              smallest = left;
+          }
+          if (
+              right < this.data.length &&
+              this.data[right][0] < this.data[smallest][0]
+          ) {
+              smallest = right;
+          }
+          if (smallest !== idx) {
+              this.swap(idx, smallest);
+              idx = smallest;
+          } else {
+              break;
+          }
+      }
+  }
+  isEmpty() {
+      return this.data.length === 0;
+  }
+}
+var countPaths = function (n, roads) {
+  let pq = new MinHeap();
+  let ways = Array(n).fill(0);
+  let distance = Array(n).fill(Number.MAX_VALUE);
+  let adj = Array(n).fill(0).map(() => []);
+  for(let [u,v,time] of roads){
+      adj[u].push([v,time]);
+      adj[v].push([u,time]);
+  }
+  pq.push([0,0]); //dist, node
+  distance[0] = 0; //from 0 to 0 dist will be 0
+  ways[0] = 1; 
+  let mod = 1e9+7;
+
+  while(!pq.isEmpty()){
+      let [dist, node] = pq.poll();
+      for(let [v,time] of adj[node]){
+          if((dist+time) < distance[v]){
+              distance[v] = dist+time;
+              pq.push([dist+time, v])
+              ways[v] = ways[node];
+          }else if(dist+time === distance[v]){
+              ways[v] = (ways[v] + ways[node]) % mod;
+          }
+      }
+  }
+  return ways[n-1] % mod;
+};
