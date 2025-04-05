@@ -40,13 +40,10 @@ find when constraint small O(n), O(1)
 1. find the OR for all the nums[i]
 2. left shift to result by n-1 to form ans
 */
-var subsetXORSum1 = function(nums) {
+var subsetXORSum = function(nums) {
   let result = 0;
-  let len = nums.length;
-
-  for(let i=0; i<len; i++){
+  for(let i=0; i<nums.length; i++){
       result |= nums[i];
   }
-  //left shift
-  return result << (len-1);
+  return result << (nums.length-1);
 };
