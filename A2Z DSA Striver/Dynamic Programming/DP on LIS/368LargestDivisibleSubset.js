@@ -17,32 +17,32 @@ arr[prev] so in for loop no need to check this. we just need to
 check the divisble condition
 TC: O(n^2)+O(n)(for filling the lis) ~ O(n^2), SC: O(n)
 */
-var largestDivisibleSubset = function(nums) {
+var largestDivisibleSubset = function (nums) {
   //first we need to sort the nums
-  nums = nums.sort((a,b) => a-b);
+  nums = nums.sort((a, b) => a - b);
   let n = nums.length;
   let dp = Array(n).fill(1);
   let hash = []; //this will size of n
   let maxi = 1;
   let largestIndex = 0;
-  for(let i=0; i<n; i++){
-      hash[i] = i;
-      for(let prev=0; prev<i; prev++){
-          if(nums[i]%nums[prev] === 0 && dp[i] < dp[prev]+1){
-              dp[i] = 1+dp[prev];
-              hash[i] = prev;
-          }
+  for (let i = 0; i < n; i++) {
+    hash[i] = i;
+    for (let prev = 0; prev < i; prev++) {
+      if (nums[i] % nums[prev] === 0 && dp[i] < dp[prev] + 1) {
+        dp[i] = 1 + dp[prev];
+        hash[i] = prev;
       }
-      //update the lastInde and maxi length
-      if(dp[i] > maxi){
-          maxi = dp[i];
-          largestIndex = i;
-      }
+    }
+    //update the lastInde and maxi length
+    if (dp[i] > maxi) {
+      maxi = dp[i];
+      largestIndex = i;
+    }
   }
   let lis = [];
-  while(hash[largestIndex] !== largestIndex){
-      lis.push(nums[largestIndex]);
-      largestIndex = hash[largestIndex];
+  while (hash[largestIndex] !== largestIndex) {
+    lis.push(nums[largestIndex]);
+    largestIndex = hash[largestIndex];
   }
   lis.push(nums[largestIndex]);
   return lis;
