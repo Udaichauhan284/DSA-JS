@@ -61,3 +61,31 @@ var countAndSay = function (n) {
   }
   return res;
 };
+
+
+
+/*In this we can use the Recursion
+for n=1 ans is "1", so we can send for n-1
+TC: O(2^n), SC: O(n)
+*/
+var countAndSay = function(n) {
+  //base case
+  if(n === 1){
+      return "1";
+  }
+
+  let say = countAndSay(n-1);
+  let result = "";
+  //now process on say
+  for(let i=0; i<say.length; i++){
+      let char = say[i];
+      let count = 1;
+      while(i < say.length-1 && say[i] === say[i+1]){
+          count++;
+          i++; //increment i
+      }
+
+      result += +count + char; // changing count to string
+  }
+  return result;
+};
