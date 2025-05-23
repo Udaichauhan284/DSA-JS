@@ -61,3 +61,48 @@ var maximumValueSum1 = function(nums, k, edges) {
   }
   return idleSum;
 };
+
+
+
+
+
+
+/*23 May 25, Leetcode POTD
+In this, we use the greedy method and we do
+maintain the count and do the xor in every 
+value of nums, so what will happen, if we want
+to do xor in e1toe2, means we between these 
+edges all edge will xor twice and twice xor
+will give same result, also if in edges 
+there is big number and we need to xor because
+we need to do in pair, so for that case we will
+take the case of minDamage, and we will minise
+it. and if count is even we will return the
+idleSum, otherwise we will return the 
+sum-minDamage, TC: O(n), SC: O(1)
+*/
+var maximumValueSum = function(nums, k, edges) {
+    let sum = 0;
+    let count = 0; //to count the pair
+    let minDamage = Number.MAX_VALUE;
+    //now iterate over the nums
+    for(let num of nums){
+        if(num < (num ^ k)){
+            count++;
+            sum += num ^ k;
+        }else{
+            //if not, means xor is not greater 
+            //then curr num, simple add, num
+            sum += num;
+        }
+        //now find the minDamage, edge and take that one, so we will get max
+        minDamage = Math.min(minDamage, Math.abs(num-(num ^ k)));
+    }
+
+    //now check the count is even or not
+    if(count % 2 === 0){
+        return sum;
+    }else{
+        return sum - minDamage;
+    }
+};
