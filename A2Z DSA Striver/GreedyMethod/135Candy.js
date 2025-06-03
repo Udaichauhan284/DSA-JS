@@ -71,3 +71,67 @@ const candy1 = (ratings) => {
   }
   return candy;
 };
+
+
+//02 June 2025, Doing on 03 June
+/*In this we are taking two array, because we need to traverse
+from left to right and then right to left
+in that check the rating[i] > rating[i-1] and rating[i] > rating[j+1]
+according to that add left[i-1]+1 to left and right[i+1]+1
+TC: O(2n), SC: O(2n)
+*/
+var candy = function(ratings) {
+    let len=ratings.length;
+    let left = Array(len).fill(1); //SC:O(n)
+    let right = Array(len).fill(1); //SC:O(n)
+
+    //move from the left to right
+    for(let i=1; i<len; i++){
+        if(ratings[i] > ratings[i-1]){
+            left[i] = left[i-1]+1;
+        }else{
+            left[i] = 1;
+        }
+    }
+
+    //movw from right to left
+    for(let j=len-2; j>=0; j--){
+        if(ratings[j] > ratings[j+1]){
+            right[j] = right[j+1]+1;
+        }else{
+            right[j] = 1;
+        }
+    }
+
+    let result = 0;
+    for(let i=0; i<len; i++){
+        result += Math.max(left[i], right[i]);
+    }
+    return result;
+};
+
+/*In Better Method, we can simply use the one array and in that
+we can compute the value
+TC:O(2n), SC:O(n)
+*/
+var candy = function(ratings) {
+    let len = ratings.length;
+    let count = Array(len).fill(1);
+
+    for(let i=1; i<len; i++){
+        if(ratings[i] > ratings[i-1]){
+            count[i] = Math.max(count[i], count[i-1]+1);
+        }
+    }
+    //now traverse from right to left
+    for(let i=len-2; i>=0; i--){
+        if(ratings[i] > ratings[i+1]){
+            count[i] = Math.max(count[i], count[i+1]+1);
+        }
+    }
+    let result = 0;
+    for(let i=0; i<len; i++){
+        result += count[i];
+    }
+    return result;
+};
