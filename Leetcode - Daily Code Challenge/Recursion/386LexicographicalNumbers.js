@@ -57,3 +57,30 @@ const lexicalOrder1 = (n) => {
     return result;
   }
 }
+
+
+
+/*08 June 25, leetcode POTD
+Method 1: use of Recursion DFS, we pick the num and move into depth
+and check and then see if we able to form this and newNum is less then
+n.
+TC: O(n), SC: O(no. of digit)
+*/
+var lexicalOrder = function(n) {
+    let result = [];
+    for(let startNum=1; startNum<=9; startNum++){
+        solve(startNum, n, result);
+    }
+    return result;
+};
+function solve(curr, limit, result){
+    //base condition
+    if(curr > limit) return;
+    //if not, put into the result arr
+    result.push(curr);
+    for(let append=0; append <= 9; append++){
+        let newNum = curr * 10 + append;
+        if(newNum > limit) return;
+        solve(newNum, limit, result);
+    }
+}
