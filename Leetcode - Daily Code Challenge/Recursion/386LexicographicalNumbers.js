@@ -64,7 +64,7 @@ const lexicalOrder1 = (n) => {
 Method 1: use of Recursion DFS, we pick the num and move into depth
 and check and then see if we able to form this and newNum is less then
 n.
-TC: O(n), SC: O(no. of digit)
+TC: O(n), SC: O(no. of digit), O(logn)
 */
 var lexicalOrder = function(n) {
     let result = [];
