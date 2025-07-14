@@ -50,3 +50,20 @@ const reverseLL = (head) => {
     head.next = null;
     return last;
 }
+
+
+
+/*Method 2, in this we can also use the Bit Manupilation
+in starting the result will be 0, make the left shift of it
+result << 1 now OR with the curr head.val
+This will form the result
+TC: O(n), SC: O(1)
+*/
+var getDecimalValue = function(head) {
+    let result = 0;
+    while(head){
+        result = result << 1 | head.val;
+        head = head.next;
+    }
+    return result;
+};
