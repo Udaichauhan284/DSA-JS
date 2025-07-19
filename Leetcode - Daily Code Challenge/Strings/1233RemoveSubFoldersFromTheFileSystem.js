@@ -41,6 +41,50 @@ var removeSubfolders = function(folder) {
 };
 
 
+//With explaination comments
+
+/* 19 July 2025, Leetcode POTD
+in this we need to find the subfolder, which start with
+folder which is already present in array, means curr one is 
+subfolder.
+TC: O(n * l^2), n if for saving into set, l is for movement on currFolder and
+substirng function
+SC: O(n)
+*/
+var removeSubfolders = function(folder) {
+    let uniqueFolder = new Set();
+    for(let f of folder){
+        uniqueFolder.add(f);
+    }
+    
+    let result = [];
+    for(let currFolder of folder){
+        let isSubFolder = false;
+        let temp = currFolder; //need to make copy of currOne, we will edit
+        while(currFolder){
+            //now see the position of /
+            let position = currFolder.lastIndexOf('/');
+            //now take out the main folder use of substring
+            currFolder = currFolder.substring(0, position);
+
+            if(uniqueFolder.has(currFolder)){
+                //means uniqueFolder set hase main folder, measn currone
+                //is subfolder
+                isSubFolder = true;
+                break;
+            }
+        }
+        if(isSubFolder === false){
+            //means we wont able to find the main folder from the currOne,
+            //so currOne is not a subfolder, add into the result
+            result.push(temp); //we need to add temp, because currfolder is
+            //modified with substring;
+        }
+    }
+    return result;
+};
+
+
 /*IN second method we use sorting, with sorting parent folder will be
 on first index then subfolder, so it will easy to look for subfolder
 ones. TC: O(nlogn), SC: O(1)
