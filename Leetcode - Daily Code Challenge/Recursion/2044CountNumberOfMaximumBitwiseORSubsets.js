@@ -76,3 +76,36 @@ function subsetsCount(idx, currOR, nums, maxOR, dp){
   dp[idx][currOR] = notTake+take;
   return dp[idx][currOR];
 }
+
+
+
+
+//28 July 2025, Leetcode POTD
+/*For taking the maximum subsets, we need to do 
+pick or not pick method, which is recurison
+TC: O(2^n), SC: O(n)
+*/
+var countMaxOrSubsets = function(nums) {
+    let maxOR = 0;
+    for(let num of nums){
+        maxOR |= num;
+    }
+    return solve(0,0,nums,maxOR);
+};
+function solve(idx, currOR, nums, maxOR){
+    //base condition, when idx reaches last
+    if(idx === nums.length){
+        //now check if we have currOR same as maxOR
+        if(currOR === maxOR){
+            return 1;
+        }
+        return 0;
+    }
+
+    //now apply the recursion
+    //not take
+    let notTake = solve(idx+1, currOR, nums, maxOR);
+    //take one
+    let take = solve(idx+1, (currOR | nums[idx]), nums, maxOR);
+    return notTake+take;
+}
