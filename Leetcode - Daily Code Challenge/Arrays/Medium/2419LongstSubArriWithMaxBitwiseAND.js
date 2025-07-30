@@ -66,3 +66,37 @@ var longestSubarray = function(nums) {
   }
   return result;
 };
+
+
+
+
+
+/*LC POTD 30 July 2025,
+In optimate method, we need to find the maxNUM subarray,
+because if we do the AND of same num, we get the same num
+and we do the AND of different num, we get the num which is
+less then both number. so we need to find the maxNUM subarr
+TC: O(n), SC: O(1)
+*/
+var longestSubarray = function(nums) {
+    let len = nums.length;
+    let maxNum = 0;
+    let result = 0;
+    let maxLen = 0;
+    for(let num of nums){
+        //now check is num is greater then maxNUM, make that max num
+        if(num > maxNum){
+            maxNum = num;
+            //so for this, new maxNum, we have new maxLen and result = 0
+            maxLen = 0;
+            result = 0;
+        }
+        if(num === maxNum){
+            maxLen++;
+        }else {
+            maxLen = 0;
+        }
+        result = Math.max(result, maxLen);
+    }
+    return result;
+};
