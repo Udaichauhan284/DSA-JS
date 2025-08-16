@@ -23,3 +23,20 @@ var largestGoodInteger = function(num) {
     // If we found a digit, return it repeated 3 times
     return maxDigit ? maxDigit.repeat(3) : '';
 };
+
+
+
+/*TC: O(n), SC: O(1)
+*/
+var largestGoodInteger = function(num) {
+    let len = num.length;
+    let maxDigit = '';
+    for(let i=0; i<=len-3; i++){
+        if(num[i]===num[i+1] && num[i]===num[i+2]){
+            if(num[i] > maxDigit){
+                maxDigit = num[i];
+            }
+        }
+    }
+    return maxDigit !== '' ? maxDigit.repeat(3) : '';
+};
