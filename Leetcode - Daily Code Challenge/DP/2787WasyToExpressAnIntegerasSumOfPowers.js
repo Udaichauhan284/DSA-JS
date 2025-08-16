@@ -70,7 +70,7 @@ TLE
 
 TC: (n*n), SC: O(n*n)
 */
-const M = 1e9 + 7;
+const MOD = 1e9 + 7;
 var numberOfWays = function(n, x) {
     let dp = Array.from({length: n+1}, () => Array(n+1).fill(-1));
     return solve(n,1,x,dp); //n,num,x
@@ -92,6 +92,6 @@ const solve = (n,num,x,dp) => {
     //now use the recursion
     let take = solve(n-powerOfNum, num+1, x,dp);
     let skip = solve(n,num+1,x,dp);
-    dp[n][num] = (take+skip)%M;
+    dp[n][num] = (take+skip)%MOD;
     return dp[n][num];
 }
