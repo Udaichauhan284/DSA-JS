@@ -97,6 +97,7 @@ function solve(i,j,n,m,matrix,dp){
 /*Approach Bottom Up DP method
 TC: O(n*m), SC: O(n*m)
 */
+//Updated 20 Aug 2025, Leetcode POTD, Medium
 var countSquares = function(matrix) {
     let n = matrix.length;
     let m = matrix[0].length;
