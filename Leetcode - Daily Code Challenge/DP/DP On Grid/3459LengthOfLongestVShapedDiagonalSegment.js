@@ -54,3 +54,73 @@ function solve(i,j,d,grid,canTurn,val,m,n){
     }
     return result;
 }
+
+
+
+
+/*In this we moving by 90 direction, so we maintain the
+direction array, by 90 degree direction from prev one
+when we see the 1, we will used the solve fucntion
+and pass i,j,d(direction) in which we are moving
+and canturn variable, means direction can turn or not
+and val==2, so that next one follow the pattern
+
+In this we can also memoize it, in this only 4 variables are changing
+i,j,d,canTurn, we can take the dp and memoize it
+TC: O(m*n), SC: O(m*n);
+*/
+const directions = [[1,1],[1,-1],[-1,-1],[-1,1]];
+
+var lenOfVDiagonal = function(grid) {
+    let m = grid.length;
+    let n = grid[0].length;
+    let result = 0;
+
+    // Dynamic DP size instead of fixed 501
+    let dp = Array.from({ length: m }, () =>
+        Array.from({ length: n }, () =>
+            Array.from({ length: 4 }, () =>
+                Array(2).fill(-1)
+            )
+        )
+    );
+
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if (grid[i][j] === 1) {
+                for (let d = 0; d <= 3; d++) {
+                    result = Math.max(result, 1 + solve(i, j, d, grid, 1, 2, m, n, dp));
+                }
+            }
+        }
+    }
+    return result;
+};
+
+function solve(i, j, d, grid, canTurn, val, m, n, dp) {
+    let newI = i + directions[d][0];
+    let newJ = j + directions[d][1];
+
+    if (newI < 0 || newI >= m || newJ < 0 || newJ >= n || grid[newI][newJ] !== val) {
+        return 0;
+    }
+
+    if (dp[newI][newJ][d][canTurn] !== -1) {
+        return dp[newI][newJ][d][canTurn];
+    }
+
+    let result = 0;
+
+    // Keep moving in same direction
+    let keepMoving = 1 + solve(newI, newJ, d, grid, canTurn, (val === 2) ? 0 : 2, m, n, dp);
+    result = Math.max(result, keepMoving);
+
+    // Try turning once
+    if (canTurn) {
+        let turnMoving = 1 + solve(newI, newJ, (d + 1) % 4, grid, 0, (val === 2) ? 0 : 2, m, n, dp);
+        result = Math.max(result, turnMoving);
+    }
+
+    dp[newI][newJ][d][canTurn] = result;
+    return result;
+}
