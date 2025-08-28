@@ -69,7 +69,7 @@ In this we can also memoize it, in this only 4 variables are changing
 i,j,d,canTurn, we can take the dp and memoize it
 TC: O(m*n), SC: O(m*n);
 */
-const directions = [[1,1],[1,-1],[-1,-1],[-1,1]];
+const direction = [[1,1],[1,-1],[-1,-1],[-1,1]];
 
 var lenOfVDiagonal = function(grid) {
     let m = grid.length;
