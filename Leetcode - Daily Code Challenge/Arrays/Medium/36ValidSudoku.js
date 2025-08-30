@@ -75,3 +75,34 @@ function checkBoxes(board,sr,er,sc,ec){
     }
     return true;
 }
+
+
+
+/*Approach 2, we can form the string, where we find the 
+elem, and push into set and later we see from same row
+or col or box we get the same string, is yes we already see
+that elem, return false
+for box, in any 3*3 box, we can chekc i/3 and j/3 for any
+indices in box we will get the same value for i and j
+TC: O(9*9)~O(1), SC: O(1)
+*/
+var isValidSudoku = function(board) {
+    let unique = new Set();
+    for(let i=0; i<9; i++){
+        for(let j=0; j<9; j++){
+            if(board[i][j] === '.') continue;
+            let row = `${board[i][j]} at ROW ${i}`;
+            let col = `${board[i][j]} at COL ${j}`;
+            let box = `${board[i][j]} at BOX ${Math.floor(i/3)}-${Math.floor(j/3)}`
+
+            if(unique.has(row) || unique.has(col) || unique.has(box)){
+                return false;
+            }
+            //else, add in set
+            unique.add(row);
+            unique.add(col);
+            unique.add(box);
+        }
+    }
+    return true;
+};
