@@ -52,3 +52,42 @@ var countBadPairs = function(nums) {
 
     return result;
 };
+
+
+
+/*Method 1, brute force, use of nested loop
+to find the bad pairs
+TC: O(n^2), SC: O(1)
+*/
+var countBadPairs = function(nums) {
+    // let len = nums.length;
+    // let count=0;
+    // for(let i=0; i<len; i++){
+    //     for(let j=i+1; j<len; j++){
+    //         if(j-i !== nums[j]-nums[i]){
+    //             count++;
+    //         }
+    //     }
+    // }
+    // return count;
+
+    //Method 2, change the equation and form
+    //nums[i]-i
+    let len = nums.length;
+    let map = new Map(); 
+    let result = 0;
+
+    for (let j = 0; j < len; j++) {
+        let val = nums[j] - j;  // transform
+
+        let countGood = map.get(val) || 0;  // how many nums[i]-i matched before
+        let totalNumBefore = j;
+        let badPairs = totalNumBefore - countGood;
+
+        result += badPairs;
+
+        // update map
+        map.set(val, (map.get(val) || 0) + 1);
+    }
+    return result;
+};
