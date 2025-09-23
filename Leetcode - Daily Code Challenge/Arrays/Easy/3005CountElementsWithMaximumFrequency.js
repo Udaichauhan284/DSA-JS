@@ -7,18 +7,23 @@ Explanation: The elements 1 and 2 have a frequency of 2 which is the maximum fre
 So the number of elements in the array with maximum frequency is 4.
 */
 
+//Using three loops and using map, for maintain the freq
+//TC: O(n+n+n)~O(3n)~O(n), SC: O(n)
 var maxFrequencyElements = function(nums) {
-    let map = new Map();
+    let freqs = new Map();
     let maxFreq = 0;
-    for(let num of nums){ //O(n)
-        map.set(num, (map.get(num) || 0)+1);
+    let count = 0;
+    for(let num of nums){
+        freqs.set(num, (freqs.get(num) || 0)+1);
     }
-    for(let [_, freq] of map){ //O(n)
+
+    //now set the maxFreq 
+    for(let [_,freq] of freqs){
         maxFreq = Math.max(maxFreq, freq);
     }
-    //see how many have same maxFreq;
-    let count = 0;
-    for(let [_,freq] of map){ //O(n)
+
+    //now add in that count
+    for(let [_, freq] of freqs){
         if(freq === maxFreq){
             count += freq;
         }
@@ -27,17 +32,18 @@ var maxFrequencyElements = function(nums) {
 };
 
 
+//Method 2, use of single for loop
 //TC: O(n), SC: O(n)
 var maxFrequencyElements = function(nums) {
     let freqs = new Map();
-    let totalFreq = 0;
     let maxFreq = 0;
+    let totalFreq = 0;
     for(let num of nums){
+        //now set the num freq in map
         freqs.set(num, (freqs.get(num) || 0)+1);
+        //now get the freq of num
         let freq = freqs.get(num);
-
-        //if we get the freq higger then maxFreq
-        //we will change it
+        //now check the if this freq is greater then maxFreq
         if(freq > maxFreq){
             maxFreq = freq;
             totalFreq = freq;
