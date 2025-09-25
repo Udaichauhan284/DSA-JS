@@ -82,3 +82,29 @@ var minimumTotal = function(triangle) {
   }
   return prev[0];
 };
+
+
+//====> 25 Sept 2025, Leetcode POTD <===
+
+/*
+we can also use the Bottom Up Dp approach, start from
+last to top
+TC: O(n^2), SC: O(n)
+*/
+var minimumTotal = function(triangle) {
+    let n = triangle.length;
+    // start with last row
+    let dp = [...triangle[n-1]];
+
+    // go from second last row to top
+    for (let i = n - 2; i >= 0; i--) {
+        let newDp = [];
+        for (let j = 0; j <= i; j++) {
+            let down = triangle[i][j] + dp[j];
+            let diagonal = triangle[i][j] + dp[j+1];
+            newDp[j] = Math.min(down, diagonal);
+        }
+        dp = newDp;
+    }
+    return dp[0];
+};
