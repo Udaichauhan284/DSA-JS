@@ -23,3 +23,18 @@ var triangularSum = function(nums) {
     }
     return nums[0]; //atlast only one element will there
 };
+
+/*
+Method 2, in this we manage the size pointer to maintain
+the len of nums, which will be less after every sum
+TC: O(n^2), SC: O(1)
+*/
+var triangularSum = function(nums) {
+    let len = nums.length;
+    for(let size=len-1; size>=1; size--){
+        for(let i=0; i<size; i++){
+            nums[i] = (nums[i]+nums[i+1])%10;
+        }
+    }
+    return nums[0];
+};
