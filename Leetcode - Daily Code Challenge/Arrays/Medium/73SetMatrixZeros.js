@@ -137,3 +137,117 @@ var setZeroes = function(matrix) {
     }
     return matrix;
 };
+
+
+
+
+/*
+=======> 02 Oct 2025 <=======
+Go thorugh these explaination, these are good
+*/
+
+/*02 Oct 2025
+Method 1, Brute Method, use of extra Row and col to 
+maintain where i need to make the changes in matrix
+TC: O(m*n + m*n) ~ O(2(m*n)) ~ O(m*n), SC: O(m+n)
+*/
+var setZeroes = function(matrix) {
+    let m = matrix.length;
+    let n = matrix[0].length;
+
+    //now take row and col for maintain the flag
+    let row = Array(m).fill(false);
+    let col = Array(n).fill(false);
+
+    //now traverse over the matrix O(m*n)
+    for(let i=0; i<m; i++){
+        for(let j=0; j<n; j++){
+            if(matrix[i][j] === 0){
+                //mark that ith and jth place true
+                row[i] = true; //need to make the change
+                col[j] = true;
+            }
+        }
+    }
+
+    //now traverse over again to make it zero using 
+    //the row and col array
+    for(let i=0; i<m; i++){
+        for(let j=0; j<n; j++){
+            if(row[i] === true || col[j] === true){
+                //mark that index 0
+                matrix[i][j] = 0;
+            }
+        }
+    }
+    return matrix;    
+};
+
+
+/*02 Oct 2025
+Method 2: Optimal Method, use of first row and col
+as a marker to mark the other elements zero in the matrix
+first take two markers firstRowZero and firstColZero
+these are for to mark that row and col zero if there
+is zero in the first row and col, if yes make that zero
+in later part.
+TC: O(m*n), SC: O(1)
+*/
+var setZeroes = function(matrix) {
+    let m = matrix.length;
+    let n = matrix[0].length;
+
+    let firstRowZero = false;
+    let firstColZero = false;
+
+    //now mark the first row and col zero if there is zero in it
+    //first check the row, so for that col will move
+    for(let j=0; j<n; j++){
+        if(matrix[0][j] === 0){
+            firstRowZero = true;
+            break;
+        }
+    }
+
+    //now check the col, so for that row will move
+    for(let i=0; i<m; i++){
+        if(matrix[i][0] === 0){
+            firstColZero = true;
+            break;
+        }
+    }
+
+    //Step 2: now use the first row and col as marker and traverse over the matrix and mark 0 in first row and col
+    for(let i=1; i<m; i++){
+        for(let j=1; j<n; j++){
+            if(matrix[i][j] === 0){
+                matrix[i][0] = 0; //col
+                matrix[0][j] = 0; //row
+            }
+        }
+    }
+
+    //Step 3: now with the help of first row and col as marker make the zero in main matrix
+    for(let i=1; i<m; i++){
+        for(let j=1; j<n; j++){
+            if(matrix[i][0] === 0 || matrix[0][j] === 0){
+                matrix[i][j] = 0;
+            }
+        }
+    }
+
+    //Step 4 and 5 mark the first row and col zero
+    //if we have those two variable true
+    if(firstRowZero){
+        for(let j=0; j<n; j++){
+            matrix[0][j] = 0;
+        }
+    }
+
+    if(firstColZero){
+        for(let i=0; i<m; i++){
+            matrix[i][0] = 0;
+        }
+    }
+    return matrix;
+};
