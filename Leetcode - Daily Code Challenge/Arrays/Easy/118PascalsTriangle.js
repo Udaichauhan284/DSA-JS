@@ -29,3 +29,26 @@ var generate = function (numRows) {
     }
     return result;
 };
+
+/* 3 oct 2025,
+check this out, this is nice approach to follow the Pascal question
+*/
+
+/*In this we need to think about the 2d array, where i=0, have 1 elem
+and i=1 have 2 elem, so in i row have i+1 eleme
+and then we need to add above elem and digonally eleme i-1,j and 
+i-1,j-1
+TC: O(numRows * numRows) worst case, SC: O(n) for result ~ O(1)
+*/
+var generate = function(numRows) {
+    let result = Array(numRows);
+    for(let i=0; i<numRows; i++){
+        //now we need to build the 2d array, at i we have i+1 elem
+        result[i] = Array(i+1).fill(1);
+        for(let j=1; j<i; j++){
+            //now add the above elem and diagonally elem
+            result[i][j] = result[i-1][j]+result[i-1][j-1];
+        }
+    }
+    return result;
+};
