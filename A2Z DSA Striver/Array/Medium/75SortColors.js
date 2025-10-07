@@ -95,3 +95,25 @@ var sortColors = (nums) => {
     }
     return nums;
 }
+
+//07 Oct 2025
+var sortColors = (nums) => {
+    let low = 0, mid = 0, high = nums.length-1;
+    while(mid <= high){
+        if(nums[mid] === 1){
+            //we want one in middle
+            mid++;
+        }
+        else if(nums[mid] === 0){
+            //we want zero in starting
+            [nums[mid], nums[low]] = [nums[low], nums[mid]];
+            low++;
+            mid++;
+        }else{
+            //mid is 2
+            [nums[mid], nums[high]] = [nums[high], nums[mid]];
+            high--;
+        }
+    }
+    return nums;
+}
