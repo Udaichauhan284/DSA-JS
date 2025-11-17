@@ -35,3 +35,57 @@ var minScoreTriangulation = function (values) {
     };
     return dp(0, n - 1);
 };
+
+//18 Nov 2025
+/*18 Nov 2025
+This approach is of solving the subproblem, if
+we make one line from one edge to another, 
+it will break the polygon into sub problems and
+also middle one will also become the triangle, 
+we can find the answer for that.
+TC: O(2^n)
+*/
+var minScoreTriangulation = function(values) {
+    let len = values.length;
+    return solve(values, 0, len-1); //i and j
+};
+function solve(values, i, j){
+    if(j-i < 2) return 0; //means edges are less then 2, so triangle can form
+    //now start the loop between i and j to make
+    //the triangle
+    let result = Number.MAX_VALUE;
+    for(let k=i+1; k<j; k++){
+        let wt = solve(values, i, k) + (values[i] * values[k] * values[j]) + solve(values, k, j);
+        result = Math.min(result, wt);
+    }
+    return result;
+}
+
+
+/*18 Nov 2025
+This approach is of solving the subproblem, if
+we make one line from one edge to another, 
+it will break the polygon into sub problems and
+also middle one will also become the triangle, 
+we can find the answer for that.
+we can also do it with Recursion with memo
+TC: O(n*n*n), SC: O(n*n)
+*/
+var minScoreTriangulation = function(values) {
+    let len = values.length;
+    let dp = Array.from({length : len+1}, () => Array(len+1).fill(-1));
+    return solve(values, 0, len-1, dp); //i and j
+};
+function solve(values, i, j, dp){
+    if(j-i < 2) return 0; //means edges are less then 2, so triangle can form
+    //now start the loop between i and j to make
+    //the triangle
+    if(dp[i][j] !== -1) return dp[i][j];
+    let result = Number.MAX_VALUE;
+    for(let k=i+1; k<j; k++){
+        let wt = solve(values, i, k, dp) + (values[i] * values[k] * values[j]) + solve(values, k, j, dp);
+        result = Math.min(result, wt);
+    }
+    dp[i][j] = result;
+    return dp[i][j];
+}
