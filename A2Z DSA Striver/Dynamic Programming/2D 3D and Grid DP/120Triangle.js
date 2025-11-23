@@ -183,3 +183,24 @@ var minimumTotal = function(triangle) {
     }
     return t[0][0]; //moving up we will have the ans in top row, col
 };
+
+
+/*Method 4: , optimize Bottom-Up, as we moving up, we only
+need the last row, for checking the till that row,col 
+what is minPathSUm, so take the whole traingle, we only take it
+lastRow
+TC: O(n^2), SC: O(n)
+*/
+var minimumTotal = function(triangle) {
+    let len = triangle.length;
+    //take a copy of triangle 
+    let t = [...triangle[len-1]];
+
+    //now traverse from bottom to up
+    for(let row=len-2; row>=0; row--){
+        for(let col=0; col<=row; col++){
+            t[col] = triangle[row][col] + Math.min(t[col], t[col+1]);
+        }
+    }
+    return t[0]; //moving up we will have the ans in top row, col
+};
