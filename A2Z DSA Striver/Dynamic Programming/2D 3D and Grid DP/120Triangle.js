@@ -36,23 +36,23 @@ loop from n-2 to 0 and j loop from 0 to j
 TC: O(n*n), SC: O(n*n)
 */
 var minimumTotal = function(triangle) {
-  let n = triangle.length;
-  let dp = Array(n).fill(-1).map(() => Array(n).fill(-1));
-  //base case n-1,j need to set to dp array
-  for(let j=0; j<n; j++){
-      dp[n-1][j] = triangle[n-1][j];
-  }
-  //we already set the last row value into dp and need to start 
-  //from last to 0,0, as we get the ans from 0,0
-  for(let i=n-2; i>=0; i--){
-      for(let j=0; j<=i; j++){
-          let down = triangle[i][j] + dp[i+1][j];
-          let diagonal = triangle[i][j] + dp[i+1][j+1];
+    let n = triangle.length;
+    let dp = Array(n).fill(-1).map(() => Array(n).fill(-1));
+    //base case n-1,j need to set to dp array
+    for(let j=0; j<n; j++){
+        dp[n-1][j] = triangle[n-1][j];
+    }
+    //we already set the last row value into dp and need to start 
+    //from last to 0,0, as we get the ans from 0,0
+    for(let i=n-2; i>=0; i--){
+        for(let j=0; j<=i; j++){
+            let down = triangle[i][j] + dp[i+1][j];
+            let diagonal = triangle[i][j] + dp[i+1][j+1];
 
-          dp[i][j] = Math.min(down, diagonal);
-      }
-  }
-  return dp[0][0];
+            dp[i][j] = Math.min(down, diagonal);
+        }
+    }
+    return dp[0][0];
 };
 
 /* Method 3- use of Space Optimization (use of only one last row)
@@ -62,25 +62,25 @@ loop from n-2 to 0 and j loop from 0 to j
 TC: O(n*n), SC: O(n)
 */
 var minimumTotal = function(triangle) {
-  let n = triangle.length;
-  let prev = Array(n).fill(-1)
-  //base case n-1,j need to set to dp array
-  for(let j=0; j<n; j++){
-      prev[j] = triangle[n-1][j];
-  }
-  //we already set the last row value into dp and need to start 
-  //from last to 0,0, as we get the ans from 0,0
-  for(let i=n-2; i>=0; i--){
-      let curr = Array(n).fill(-1);
-      for(let j=0; j<=i; j++){
-          let down = triangle[i][j] + prev[j];
-          let diagonal = triangle[i][j] + prev[j+1];
+    let n = triangle.length;
+    let prev = Array(n).fill(-1)
+    //base case n-1,j need to set to dp array
+    for(let j=0; j<n; j++){
+        prev[j] = triangle[n-1][j];
+    }
+    //we already set the last row value into dp and need to start 
+    //from last to 0,0, as we get the ans from 0,0
+    for(let i=n-2; i>=0; i--){
+        let curr = Array(n).fill(-1);
+        for(let j=0; j<=i; j++){
+            let down = triangle[i][j] + prev[j];
+            let diagonal = triangle[i][j] + prev[j+1];
 
-          curr[j] = Math.min(down, diagonal);
-      }
-      prev = curr;
-  }
-  return prev[0];
+            curr[j] = Math.min(down, diagonal);
+        }
+        prev = curr;
+    }
+    return prev[0];
 };
 
 
@@ -108,3 +108,26 @@ var minimumTotal = function(triangle) {
     }
     return dp[0];
 };
+
+// ======> 23 Nov <=====
+//Revision of this question
+/*Method 1; In this, we have option to go row+1,col
+or row+1,col+1, so we can use the recursion
+TC: O(2^n), SC: O(n)
+*/
+var minimumTotal = function(triangle) {
+    let len = triangle.length;
+    return solve(triangle,0, 0,len);
+};
+function solve(triangle, row, col, len){
+    //base case
+    if(row === len-1){
+        //measn we reach last row, no last row to
+        //return, return that elem
+        return triangle[row][col];
+    }
+    //take the curr elem of triangle, and next min
+    //of solve(row+1,col, row+1,col+1)
+    let minPath = triangle[row][col] + Math.min(solve(triangle, row+1, col, len), solve(triangle, row+1, col+1, len));
+    return minPath;
+}
