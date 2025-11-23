@@ -130,4 +130,56 @@ function solve(triangle, row, col, len){
     //of solve(row+1,col, row+1,col+1)
     let minPath = triangle[row][col] + Math.min(solve(triangle, row+1, col, len), solve(triangle, row+1, col+1, len));
     return minPath;
+};
+
+
+/*Method 2; In this, we have option to go row+1,col
+or row+1,col+1, so we can use the recursion
++memo -> DP method, top to bottom approach,
+in this we can use the dp of 201 space
+TC: O(n^2), SC: O(n^2)
+*/
+var minimumTotal = function(triangle) {
+    let len = triangle.length;
+    let dp = Array.from({length : 201}, () => Array(201).fill(Number.MAX_VALUE));
+    return solve(triangle,0, 0,len,dp);
+};
+function solve(triangle, row, col, len, dp){
+    //base case
+    if(row === len-1){
+        //measn we reach last row, no last row to
+        //return, return that elem
+        return triangle[row][col];
+    }
+
+    //now check with the dp
+    if(dp[row][col] !== Number.MAX_VALUE){
+        return dp[row][col];
+    }
+    //take the curr elem of triangle, and next min
+    //of solve(row+1,col, row+1,col+1)
+    let minPath = triangle[row][col] + Math.min(solve(triangle, row+1, col, len, dp), solve(triangle, row+1, col+1, len, dp));
+
+    dp[row][col] = minPath;
+    return dp[row][col];
 }
+
+/*Method 3: , use of Bottom-Up approach, we can take a 
+copy of traingale in t and iterate from row-2 and check the
+bottom row, what is minPath of that points, this is how we
+will calculate the minSumPath
+TC: O(n^2), SC: O(n^2)
+*/
+var minimumTotal = function(triangle) {
+    let len = triangle.length;
+    //take a copy of triangle 
+    let t = [...triangle];
+
+    //now traverse from bottom to up
+    for(let row=len-2; row>=0; row--){
+        for(let col=0; col<=row; col++){
+            t[row][col] += Math.min(t[row+1][col], t[row+1][col+1]);
+        }
+    }
+    return t[0][0]; //moving up we will have the ans in top row, col
+};
