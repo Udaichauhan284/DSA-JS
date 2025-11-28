@@ -48,3 +48,38 @@ var maximumTripletValue = function(nums) {
     }
     return res;
 };
+
+
+
+// My code
+var maxKDivisibleComponents = function(n, edges, values, k) {
+    // Build adjacency list
+    const graph = Array.from({ length: n }, () => []);
+    for (let [u, v] of edges) {
+        graph[u].push(v);
+        graph[v].push(u);
+    }
+
+    let count = 0;
+    
+    function dfs(node, parent) {
+        let sum = values[node]; // start with node's value
+
+        for (let nei of graph[node]) {
+            if (nei === parent) continue;
+            sum += dfs(nei, node);
+        }
+
+        // If subtree sum divisible by k -> we cut here
+        if (sum % k === 0) {
+            count++;
+            return 0;   // return 0 upward because component is closed here
+        }
+
+        return sum;  // otherwise return the accumulated sum
+    }
+
+    dfs(0, -1);
+
+    return count;
+};
