@@ -35,6 +35,7 @@ var minSubarray = function(nums, p) {
   return minLen === len ? -1 : minLen;
 };
 
+
 /*Optimal Approach- inn this we use Map, for storing the 
 currSum-target with there index where we have find it last
 if we have in map, we get the index and minu with currIndea
