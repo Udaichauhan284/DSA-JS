@@ -29,3 +29,5 @@ function countTrapezoids(points) {
 
     return Number(result % BigInt(M));
 }
+
+
