@@ -43,7 +43,7 @@ function numberOfPaths(grid, k) {
 /* Method 1: Recursion + Memo
    TC: O(n*m*k), SC: O(n*m*k)
 */
-const M = 1e9 + 7;
+const M1 = 1e9 + 7;
 
 var numberOfPaths = function (grid, k) {
     let n = grid.length;
