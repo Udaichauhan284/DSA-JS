@@ -64,4 +64,4 @@ function findAllPeople(n, meetings, firstPerson) {
     }
 
     return result;
-}.  
+}
