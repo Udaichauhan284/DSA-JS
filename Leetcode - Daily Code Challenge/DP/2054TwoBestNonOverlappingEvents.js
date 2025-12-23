@@ -11,24 +11,24 @@ overlapping one,skip that and i===j skip that
 TC: O(n^2), SC: O(1);
 */
 var maxTwoEvents = function(events) {
-  let len = events.length;
-  let result = 0;
-  for(let i=0; i<len; i++){
-      let val = events[i][2];
-      //we can take only event also, if that give me best ans
-      result = Math.max(result, val);
-      for(let j=0; j<len; j++){
-          if(i === j){
-              continue;
-          }
-          //overlapping
-          if(events[i][1] >= events[j][0]){
-              continue;
-          }
-          result = Math.max(result, val+events[j][2]);
-      }
-  }
-  return result;
+    let len = events.length;
+    let result = 0;
+    for(let i=0; i<len; i++){
+        let val = events[i][2];
+        //we can take only event also, if that give me best ans
+        result = Math.max(result, val);
+        for(let j=0; j<len; j++){
+            if(i === j){
+                continue;
+            }
+            //overlapping
+            if(events[i][1] >= events[j][0]){
+                continue;
+            }
+            result = Math.max(result, val+events[j][2]);
+        }
+    }
+    return result;
 };
 
 
