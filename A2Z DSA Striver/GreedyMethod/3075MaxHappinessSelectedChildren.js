@@ -23,3 +23,18 @@ const maximumHappinessSum = function(happiness, k) {
   return maxSum;
 }
 console.log(maximumHappinessSum([1,2,3],2));
+
+var maximumHappinessSum = function(happiness, k) {
+    let count = 0;
+    let maxSum = 0;
+    //sort the happiness in desecending order
+    happiness.sort((a,b) => b-a);
+
+//loop will run till k
+    for(let i=0; i<k; i++){
+        //need to take a max happiness
+        maxSum += Math.max(happiness[i]-count,0);
+        count++; //increase the counter
+    }
+    return maxSum;
+};
