@@ -24,7 +24,7 @@ const maximumHappinessSum = function(happiness, k) {
 }
 console.log(maximumHappinessSum([1,2,3],2));
 
-var maximumHappinessSum = function(happiness, k) {
+var maximumHappinessSum1 = function(happiness, k) {
     let count = 0;
     let maxSum = 0;
     //sort the happiness in desecending order
