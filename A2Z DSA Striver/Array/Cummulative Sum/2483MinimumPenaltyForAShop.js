@@ -32,3 +32,4 @@ var bestClosingTime = function(customers) {
 
     return minHour;
 };
+
