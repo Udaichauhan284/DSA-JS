@@ -37,3 +37,34 @@ var maxMatrixSum = function(matrix) {
     //time and second time for that neg sign
     return sum-2*minAbsNum;
 };
+
+
+/*In this we need to count the neg val, if neg values
+are even, simple return the sum of all, if not
+means they are odd, so from overall sum we need to 
+remove the min Neg value, and then minus it from 
+whole sum, so we need to sum-2*minNeg
+TC: O(n^2), SC: O(1)
+*/
+var maxMatrixSum = function(matrix) {
+    let row = matrix.length;
+    let col = matrix[0].length;
+    let countNeg = 0;
+    let minNeg = Number.MAX_VALUE;
+    let sum = 0;
+    for(let i=0; i<row; i++){
+        for(let j=0; j<col; j++){
+            sum += Math.abs(matrix[i][j]);
+            if(matrix[i][j] < 0){
+                countNeg++;
+            }
+            //now also find the minNeg
+            minNeg = Math.min(minNeg, Math.abs(matrix[i][j]));
+        }
+    }
+    if(countNeg%2 === 0){
+        //means neg is in even
+        return sum;
+    }
+    return sum-(2*minNeg); //neg is in odd, so we need to first remove the neg num, and then add the neg num, i.e minus from sum
+};
