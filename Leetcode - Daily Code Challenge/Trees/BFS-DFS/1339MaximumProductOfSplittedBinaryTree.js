@@ -42,3 +42,26 @@ var maxProduct = function(root) {
 
     return Number(maxP % MOD);
 };
+
+//TC: O(n), SC: O(n)
+var maxProduct = function(root) {
+    let mod = 1000000007n;
+    let maxP = 0n;
+    let totalSum = 0n;
+
+    const findTotalSum = (node) => {
+        if(!node) return 0n;
+
+        let leftSubSum = findTotalSum(node.left);
+        let rightSubSum = findTotalSum(node.right);
+        let sum = BigInt(node.val)+leftSubSum+rightSubSum;
+        let product = sum * (totalSum - sum);
+        if(product > maxP) maxP=product;
+        return sum;
+    }
+
+    totalSum = findTotalSum(root);
+    findTotalSum(root);
+
+    return Number(maxP%mod);
+};
