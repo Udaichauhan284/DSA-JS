@@ -64,7 +64,7 @@ function getNextSmallerRight(heights,n){
 let matrix = [["1","0","1","0","0"],["1","0","1","1","1"],["1","1","1","1","1"],["1","0","0","1","0"]];
 console.log(maximalRectangle(matrix));
 
-var maximalRectangle = function(matrix) {
+var maximalRectangle1 = function(matrix) {
     let m = matrix.length;
     let n = matrix[0].length;
     let currRow = matrix[0];
