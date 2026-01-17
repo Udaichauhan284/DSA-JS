@@ -96,4 +96,4 @@ var maximizeSquareHoleArea = function(n, m, hBars, vBars) {
     // So, take the minimum of them.
     let side = Math.min(maxWidth, maxHeight)+1; 
     return side*side;
-};
+}
