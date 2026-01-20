@@ -5,7 +5,7 @@ Output:  2
 Explanation: Below are triplets with sum less than 2 (-2, 0, 1) and (-2, 0, 3). 
 */
 
-countTriplets(arr, n, sum) {
+function countTriplets(arr, n, sum) {
         // code here
         let count = 0;
         arr.sort((a,b) => a-b); //need to sort, so that i can apply 2 pointer
