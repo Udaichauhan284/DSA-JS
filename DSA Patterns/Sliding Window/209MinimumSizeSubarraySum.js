@@ -53,3 +53,28 @@ var minSubArrayLen = function(target, nums) {
     }
     return minLen === Infinity ? 0 : minLen;
 };
+
+
+/*In this we need to find the Subarray, sum, and minWindow
+with sum >= k, so we can apply Sliding window, as we need
+to find the minWindow, we will shirnk window, because when 
+we shrink window, still we are getting the sum less then
+target, so no use of that.
+TC: O(n), SC: O(1)
+*/
+var minSubArrayLen = function(target, nums) {
+    let len = nums.length;
+    let low = 0, high = 0;
+    let windowSum = 0, minLen = Infinity;
+    while(high < len){
+        windowSum += nums[high];
+
+        while(windowSum >= target){
+            minLen = Math.min(minLen, high-low+1);
+            windowSum -= nums[low];
+            low++;
+        }
+        high++;
+    }
+    return (minLen === Infinity) ? 0 : minLen;
+};
