@@ -64,3 +64,34 @@ var longestOnes = function(nums, k) {
     }
     return maxLen;
 };
+
+
+//After learning about the maxWindow and minWindow concept on 28 jan
+/*Follow the same method, just implement by 
+Sliding window, need to find the longest subarr
+of zero atmost k
+TC: O(n), SC: O(1)
+*/
+var longestOnes = function(nums, k) {
+    let len = nums.length;
+    let low = 0, high = 0;
+    let zeros = 0;
+    let maxLen = 0;
+    while(high < len){
+        //now check the zeros
+        if(nums[high] === 0){
+            zeros++;
+        }
+
+        //in this need to find the maxWindow, so in till infor
+        //is wrong shrink the window
+        while(zeros > k){
+            if(nums[low] === 0) zeros--;
+            low++;
+        }
+
+        maxLen = Math.max(maxLen, high-low+1);
+        high++;
+    }
+    return maxLen;
+};
