@@ -40,3 +40,39 @@ function solve(l, r, ans) {
   root.right = solve(mid + 1, r, ans);
   return root;
 }
+
+
+//09 FEB 2026, Leetcode POTD
+/*In this we need to make the balance sorted Binary Tree,
+so for that, first of all need to sort the tree, for that
+store in arr and using inOrder and then for creating the tree
+use the solve function to create it, in that create a node of
+mid value.
+TC: O(n+n)~O(2n), SC: O(1) n is for recursion stack space.
+*/
+var balanceBST = function(root) {
+    let sortArr = [];
+    inOrder(root, sortArr);
+    let len = sortArr.length;
+    return construct(0,len-1,sortArr);
+};
+const inOrder = (root, sortArr) => {
+    if(root === null){
+        return;
+    }
+    inOrder(root.left, sortArr);
+    sortArr.push(root.val);
+    inOrder(root.right, sortArr);
+}
+const construct = (left, right, sortArr) => {
+    if(left > right) return null;
+
+    //need to find the mid, becuase that is sortedOne, before 
+    //that all smaller and after that all bigger element
+    let mid = Math.floor(left + (right-left)/2);
+    let root = new TreeNode(sortArr[mid]); //create a new Node
+    //now call left and right
+    root.left = construct(left, mid-1, sortArr);
+    root.right = construct(mid+1, right, sortArr);
+    return root;
+}
