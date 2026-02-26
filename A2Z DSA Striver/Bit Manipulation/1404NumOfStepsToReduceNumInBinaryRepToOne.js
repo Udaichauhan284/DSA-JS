@@ -67,3 +67,19 @@ const numSteps = (s) => {
   }
   return op+carry; //this carry adding for last index.
 }
+
+
+//26 Feb 2026, leetcode potd, MEDIUM
+var numSteps = function(s) {
+    let op = 0;
+    let carry = 0;
+    for(let i=s.length-1; i>=1; i--){
+        if((s.charCodeAt(i)-'0'.charCodeAt(0)+carry)%2 === 1){
+            op += 2;
+            carry = 1;
+        }else{
+            op += 1;
+        }
+    }
+    return op+carry;
+};
