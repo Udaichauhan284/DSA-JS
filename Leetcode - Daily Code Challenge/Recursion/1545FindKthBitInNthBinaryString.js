@@ -28,23 +28,23 @@ if k > len/2, in this case we know we are reversing the
 originalString, so 1st is 7th bit in reversestring,
 so originalString index (len - (k-1)). TC:O(n),SC:O(n)
 */
-var findKthBit = function(n, k) {
-  let len = (1<<n)-1; //left shift used in Pow(2,n)
-  if(n === 1){
-      return '0'; //given in question S1="0"
-  }
-  //now main logic
-  if(k < Math.ceil(len/2)){
-      //measn look into original string Sn-1
-      return findKthBit(n-1, k);
-  }else if(k === Math.ceil(len/2)){
-      //measn we are at middle
-      return "1";
-  }else{
-      //means k is bigger then middle
-      let ch = findKthBit(n-1,(len-(k-1)));
-      //look for char in originalstring len-(k-1)
-      return ch === "0" ? "1" : "0"; //handling the
-      //invert case
-  }
+var findKthBit = function (n, k) {
+    let len = (1 << n) - 1; //left shift used in Pow(2,n)
+    if (n === 1) {
+        return "0"; //given in question S1="0"
+    }
+    //now main logic
+    if (k < Math.ceil(len / 2)) {
+        //measn look into original string Sn-1
+        return findKthBit(n - 1, k);
+    } else if (k === Math.ceil(len / 2)) {
+        //measn we are at middle
+        return "1";
+    } else {
+        //means k is bigger then middle
+        let ch = findKthBit(n - 1, len - (k - 1));
+        //look for char in originalstring len-(k-1)
+        return ch === "0" ? "1" : "0"; //handling the
+        //invert case
+    }
 };
