@@ -134,3 +134,14 @@ var minFlips = function(s) {
     }
     return result;
 };
+
+/*
+in slinding window, use IF
+
+window size increases by exactly 1
+and only one removal is needed
+
+use while
+multiple removals may be needed
+
+*/
