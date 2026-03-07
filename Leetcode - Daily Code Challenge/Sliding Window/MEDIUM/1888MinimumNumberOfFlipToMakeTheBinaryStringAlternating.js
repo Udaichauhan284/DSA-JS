@@ -72,3 +72,65 @@ var minFlips = function(s) {
     }
     return result;
 };
+
+/*
+Method 2 (Optimal)
+
+Instead of physically rotating the string (s+s),
+we simulate rotation using index % len.
+
+Also instead of creating alternating strings,
+we compute expected characters using parity.
+
+Pattern1 → 010101...
+Pattern2 → 101010...
+
+We maintain a sliding window of size = original length
+and count flips needed for both patterns.
+TC: O(2*n), SC: O(1)
+*/
+var minFlips = function(s) {
+    let len = s.length;
+    let flip1 = 0;
+    let flip2 = 0;
+    let result = Number.MAX_VALUE;
+    let i = 0;
+    let j = 0;
+
+    //sliding window
+    while(j < (2*len)){
+        //now find the expected char at j
+        let expectedCharS1 = (j%2) ? "1" : "0";
+        let expectedCharS2 = (j%2) ? "0" : "1";
+
+        //now check the new char
+        if(s[j%len] !== expectedCharS1){
+            flip1++;
+        }
+        if(s[j%len] !== expectedCharS2){
+            flip2++;
+        }
+
+        //now shrink the window from left
+        if(j-i+1 > len){
+            //what will be expected char at i, find again
+            expectedCharS1 = (i%2) ? "1" : "0";
+            expectedCharS2 = (i%2) ? "0" : "1";
+
+            if(s[i%len] !== expectedCharS1){
+                flip1--;
+            }
+            if(s[i%len] !== expectedCharS2){
+                flip2--;
+            }
+            i++;
+        }
+
+        if(j-i+1 === len){
+            result = Math.min(result, Math.min(flip1, flip2));
+        }
+
+        j++;
+    }
+    return result;
+};
