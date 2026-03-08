@@ -20,3 +20,21 @@ Explanation: "11" does not appear in nums. "00" would also be correct.
     }
     return result.join("");
 };
+
+
+/* TC: O(n), SC: O(n)
+08 March 2026
+*/
+var findDifferentBinaryString = function(nums) {
+    let result = [];
+    let len = nums.length;
+    //this is diagonal bit flipping technique
+    for(let i=0; i<len; i++){
+        if(nums[i][i] === "0"){
+            result.push("1");
+        }else{
+            result.push("0");
+        }
+    }
+    return result.join("");
+};
