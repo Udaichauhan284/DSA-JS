@@ -36,3 +36,28 @@ function solve(n,curr,result){
         curr.pop(); //UNDO
     }
 }
+
+var getHappyString = function(n, k) {
+    let result = [];
+    solve(n,[],result);
+    if(result.length < k){
+        return ""; //k len is bigger then result
+    }
+    return result[k-1]; // one based index
+};
+function solve(n,curr,result){
+    if(curr.length === n){
+        result.push(curr.join(""));
+        return;
+    }
+    
+    for(let ch of ["a","b","c"]){
+        if(curr.length > 0 && curr[curr.length-1] === ch){
+            continue;
+        }
+
+        curr.push(ch); // DO
+        solve(n,curr,result); //explore
+        curr.pop(); //UNDO
+    }
+}
